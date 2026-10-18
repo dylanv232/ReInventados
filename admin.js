@@ -2,6 +2,11 @@
 
 const CLAVE_BORRADOR = "reinventados_borrador";
 const CLAVE_INVENTARIO = "reinventados_inventario";
+const CLAVE_TOKEN_GITHUB = "reinventados_github_token";
+
+const DUENO_REPO = "dylanv232";
+const NOMBRE_REPO = "ReInventados";
+const API_GITHUB = "https://api.github.com";
 
 const formProducto = document.getElementById("form-producto");
 const formularioTitulo = document.getElementById("formulario-titulo");
@@ -12,6 +17,9 @@ const bloqueCategoriaNueva = document.getElementById("categoria-nueva");
 const listaAdmin = document.getElementById("lista-admin");
 const miniaturas = document.getElementById("miniaturas");
 const origenDatos = document.getElementById("origen-datos");
+const formPublicar = document.getElementById("form-publicar");
+const campoTokenGitHub = document.getElementById("github-token");
+const avisoPublicar = document.getElementById("publicar-aviso");
 
 const formMovimiento = document.getElementById("form-movimiento");
 const selectMovProducto = document.getElementById("mov-producto");
@@ -1149,14 +1157,14 @@ function descargarBlob(blob, nombre) {
   URL.revokeObjectURL(url);
 }
 
-function exportar() {
-  const archivos = [];
+function construirContenidoWeb() {
+  const imagenesNuevas = [];
 
   const productosExportar = state.productos.map(function (producto) {
     const imagenes = producto.imagenes.map(function (src, indice) {
       if (src.indexOf("data:") === 0) {
         const nombre = "img/" + producto.id + "-" + (indice + 1) + ".jpg";
-        archivos.push({ nombre: nombre, datos: dataUrlABytes(src) });
+        imagenesNuevas.push({ ruta: nombre, dataUrl: src });
         return nombre;
       }
       return src;
@@ -1179,8 +1187,6 @@ function exportar() {
     "window.CATEGORIAS = " + JSON.stringify(state.categorias, null, 2) + ";\n\n" +
     "window.PRODUCTOS = " + JSON.stringify(productosExportar, null, 2) + ";\n";
 
-  archivos.push({ nombre: "data.js", datos: new TextEncoder().encode(contenido) });
-
   const contenidoInventario =
     "// Generado por admin.html\n\n" +
     "window.INVENTARIO = " + JSON.stringify({
@@ -1188,10 +1194,173 @@ function exportar() {
       movimientos: state.inventario.movimientos
     }, null, 2) + ";\n";
 
-  archivos.push({ nombre: "inventario.js", datos: new TextEncoder().encode(contenidoInventario) });
+  return {
+    contenido: contenido,
+    contenidoInventario: contenidoInventario,
+    imagenes: imagenesNuevas
+  };
+}
+
+function exportar() {
+  const web = construirContenidoWeb();
+  const archivos = [];
+
+  web.imagenes.forEach(function (imagen) {
+    archivos.push({ nombre: imagen.ruta, datos: dataUrlABytes(imagen.dataUrl) });
+  });
+  archivos.push({ nombre: "data.js", datos: new TextEncoder().encode(web.contenido) });
+  archivos.push({ nombre: "inventario.js", datos: new TextEncoder().encode(web.contenidoInventario) });
 
   descargarBlob(construirZip(archivos), "reinventados.zip");
 }
+
+async function llamarGitHub(ruta, metodo, cuerpo, token) {
+  const opciones = {
+    method: metodo,
+    headers: {
+      Authorization: "Bearer " + token,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json"
+    }
+  };
+  if (cuerpo) opciones.body = JSON.stringify(cuerpo);
+  const respuesta = await fetch(API_GITHUB + ruta, opciones);
+  const datos = await respuesta.json().catch(function () { return {}; });
+  if (!respuesta.ok) {
+    const detalle = datos && datos.message ? datos.message : "HTTP " + respuesta.status;
+    const error = new Error(detalle);
+    error.estado = respuesta.status;
+    throw error;
+  }
+  return datos;
+}
+
+async function sha1DeBlob(bytes) {
+  try {
+    if (!crypto.subtle) return null;
+    const cabecera = new TextEncoder().encode("blob " + bytes.length + "\0");
+    const completo = new Uint8Array(cabecera.length + bytes.length);
+    completo.set(cabecera, 0);
+    completo.set(bytes, cabecera.length);
+    const digesto = await crypto.subtle.digest("SHA-1", completo);
+    return Array.from(new Uint8Array(digesto)).map(function (b) {
+      return b.toString(16).padStart(2, "0");
+    }).join("");
+  } catch (error) {
+    return null;
+  }
+}
+
+function cambiosPublicables() {
+  const web = construirContenidoWeb();
+  const codificador = new TextEncoder();
+  const lista = [
+    {
+      ruta: "data.js",
+      bytes: codificador.encode(web.contenido),
+      subida: { content: web.contenido, encoding: "utf-8" }
+    },
+    {
+      ruta: "inventario.js",
+      bytes: codificador.encode(web.contenidoInventario),
+      subida: { content: web.contenidoInventario, encoding: "utf-8" }
+    }
+  ];
+  web.imagenes.forEach(function (imagen) {
+    lista.push({
+      ruta: imagen.ruta,
+      bytes: dataUrlABytes(imagen.dataUrl),
+      subida: { content: imagen.dataUrl.split(",")[1], encoding: "base64" }
+    });
+  });
+  return lista;
+}
+
+async function publicarGitHub() {
+  const token = campoTokenGitHub.value.trim();
+  if (!token) {
+    avisoPublicar.textContent = "Pega tu token de GitHub para publicar.";
+    return;
+  }
+  localStorage.setItem(CLAVE_TOKEN_GITHUB, token);
+
+  avisoPublicar.textContent = "Revisando cambios…";
+  const rutaRepo = "/repos/" + DUENO_REPO + "/" + NOMBRE_REPO;
+  const arbol = await llamarGitHub(rutaRepo + "/git/trees/main?recursive=1", "GET", null, token);
+  const ref = await llamarGitHub(rutaRepo + "/git/ref/heads/main", "GET", null, token);
+
+  const existentes = {};
+  arbol.tree.forEach(function (item) {
+    existentes[item.path] = item.sha;
+  });
+
+  const candidatos = cambiosPublicables();
+  const pendientes = [];
+  for (let i = 0; i < candidatos.length; i++) {
+    const candidato = candidatos[i];
+    const sha = await sha1DeBlob(candidato.bytes);
+    if (sha === null || sha !== existentes[candidato.ruta]) {
+      pendientes.push(candidato);
+    }
+  }
+
+  if (pendientes.length === 0) {
+    avisoPublicar.textContent = "Todo ya está publicado ✓ (no hay cambios).";
+    return;
+  }
+
+  avisoPublicar.textContent = "Subiendo " + pendientes.length + " archivo(s)…";
+  const entradas = [];
+  for (let j = 0; j < pendientes.length; j++) {
+    const pendiente = pendientes[j];
+    const blob = await llamarGitHub(rutaRepo + "/git/blobs", "POST", pendiente.subida, token);
+    entradas.push({ path: pendiente.ruta, mode: "100644", type: "blob", sha: blob.sha });
+  }
+
+  const nuevoArbol = await llamarGitHub(rutaRepo + "/git/trees", "POST", {
+    base_tree: arbol.sha,
+    tree: entradas
+  }, token);
+
+  const commit = await llamarGitHub(rutaRepo + "/git/commits", "POST", {
+    message: "Actualización desde el panel - " + new Date().toLocaleString("es-CL"),
+    tree: nuevoArbol.sha,
+    parents: [ref.object.sha]
+  }, token);
+
+  await llamarGitHub(rutaRepo + "/git/refs/heads/main", "PATCH", { sha: commit.sha }, token);
+
+  avisoPublicar.textContent = "Publicado ✓ (" + pendientes.length + " archivo(s)). GitHub Pages lo mostrará en ~1 minuto.";
+}
+
+formPublicar.addEventListener("submit", async function (evento) {
+  evento.preventDefault();
+  document.getElementById("boton-publicar").disabled = true;
+  avisoPublicar.textContent = "";
+  try {
+    await publicarGitHub();
+  } catch (error) {
+    let mensaje = error.message;
+    if (error.estado === 401) {
+      mensaje = "Token inválido o expirado (401).";
+    } else if (error.estado === 403) {
+      mensaje = "El token no tiene permiso sobre el repositorio (403).";
+    } else if (error.estado === 409) {
+      mensaje = "El repositorio cambió mientras publicabas; inténtalo otra vez (409).";
+    } else if (String(mensaje).indexOf("Failed to fetch") !== -1) {
+      mensaje = "sin conexión a internet.";
+    }
+    avisoPublicar.textContent = "Error al publicar: " + mensaje;
+  } finally {
+    document.getElementById("boton-publicar").disabled = false;
+  }
+});
+
+document.getElementById("boton-olvidar-token").addEventListener("click", function () {
+  localStorage.removeItem(CLAVE_TOKEN_GITHUB);
+  campoTokenGitHub.value = "";
+  avisoPublicar.textContent = "Token olvidado.";
+});
 
 document.getElementById("boton-exportar").addEventListener("click", function () {
   try {
@@ -1428,3 +1597,6 @@ renderMiniaturas();
 renderLista();
 actualizarVisibilidadFiltros();
 campoMovFecha.value = hoyISO();
+try {
+  campoTokenGitHub.value = localStorage.getItem(CLAVE_TOKEN_GITHUB) || "";
+} catch (error) {}

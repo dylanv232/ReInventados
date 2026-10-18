@@ -30,10 +30,10 @@
         <strong>Cómo publicar tus cambios</strong>
         <ol>
           <li>Agrega o edita tus productos aquí. Las fotos se reducen solas.</li>
-          <li>Pulsa <em>Exportar web (.zip)</em>.</li>
-          <li>Descomprime el archivo y copia su contenido en la carpeta de tu web, reemplazando <code>data.js</code>, <code>inventario.js</code> y la carpeta <code>img/</code>.</li>
-          <li>Sube los cambios a tu repositorio (GitHub) o a Netlify. El cliente verá lo nuevo al recargar.</li>
+          <li>Pulsa <em>Publicar cambios en GitHub</em> (la primera vez pegas tu token; queda guardado solo en este navegador).</li>
+          <li>La web se actualiza sola en ~1 minuto. No hace falta exportar nada.</li>
         </ol>
+        <p>Sin internet a mano, la alternativa sigue siendo: <em>Exportar web (.zip)</em> → copia el contenido a la carpeta de la web → <code>git push</code>.</p>
       </div>
 
       <div class="admin__acciones">
@@ -44,6 +44,19 @@
         </label>
         <button type="button" class="boton-secundario" id="boton-descartar">Descartar borrador</button>
       </div>
+
+      <form id="form-publicar" class="formulario">
+        <h3 class="formulario__titulo">Publicar cambios en GitHub</h3>
+        <label class="campo">
+          <span>Token de GitHub (queda guardado solo en este navegador)</span>
+          <input type="password" id="github-token" placeholder="ghp_..." autocomplete="off" />
+        </label>
+        <div class="formulario__botones">
+          <button type="submit" class="boton-primario" id="boton-publicar">Publicar cambios en GitHub</button>
+          <button type="button" class="boton-secundario" id="boton-olvidar-token">Olvidar token</button>
+        </div>
+        <p class="formulario__ayuda" id="publicar-aviso"></p>
+      </form>
 
       <form id="form-producto" class="formulario">
         <h3 class="formulario__titulo" id="formulario-titulo">Añadir un producto</h3>
