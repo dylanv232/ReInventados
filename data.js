@@ -15,7 +15,11 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": []
+    "imagenes": [
+      "img/aros-1.jpg",
+      "img/aros-2.jpg",
+      "img/aros-3.jpg"
+    ]
   },
   {
     "id": "atrapasuenos-azul",
