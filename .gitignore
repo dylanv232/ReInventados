@@ -1,0 +1,5 @@
+# Documentación interna del proyecto (no se publica)
+Contexto.txt
+
+# Archivos de depuración de Node (no forman parte del sitio)
+*.heapsnapshot

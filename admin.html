@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administrar · REINVENTADOS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="encabezado">
+    <h1 class="logo">REINVENTADOS</h1>
+    <span class="etiqueta-admin">Panel de administración</span>
+    <nav class="menu">
+      <a class="menu__boton" href="index.html">Ver tienda</a>
+    </nav>
+  </header>
+
+  <main class="contenido">
+    <nav class="pestanas" id="pestanas">
+      <button type="button" class="pestanas__boton activo" data-pestana="productos">Productos</button>
+      <button type="button" class="pestanas__boton" data-pestana="inventario">Inventario</button>
+      <button type="button" class="pestanas__boton" data-pestana="dashboard">Dashboard</button>
+    </nav>
+
+    <section class="panel" id="pestana-productos">
+      <h2 class="admin__titulo">Administrar productos</h2>
+      <p class="introduccion" id="origen-datos"></p>
+
+      <div class="aviso">
+        <strong>Cómo publicar tus cambios</strong>
+        <ol>
+          <li>Agrega o edita tus productos aquí. Las fotos se reducen solas.</li>
+          <li>Pulsa <em>Exportar web (.zip)</em>.</li>
+          <li>Descomprime el archivo y copia su contenido en la carpeta de tu web, reemplazando <code>data.js</code>, <code>inventario.js</code> y la carpeta <code>img/</code>.</li>
+          <li>Sube los cambios a tu repositorio (GitHub) o a Netlify. El cliente verá lo nuevo al recargar.</li>
+        </ol>
+      </div>
+
+      <div class="admin__acciones">
+        <button type="button" class="boton-primario" id="boton-exportar">Exportar web (.zip)</button>
+        <label class="boton-secundario">
+          Importar data.js
+          <input type="file" id="campo-importar" accept=".js,text/javascript" hidden />
+        </label>
+        <button type="button" class="boton-secundario" id="boton-descartar">Descartar borrador</button>
+      </div>
+
+      <form id="form-producto" class="formulario">
+        <h3 class="formulario__titulo" id="formulario-titulo">Añadir un producto</h3>
+
+        <label class="campo">
+          <span>Nombre del producto</span>
+          <input type="text" id="campo-nombre" required />
+        </label>
+
+        <label class="campo">
+          <span>Categoría</span>
+          <select id="campo-categoria"></select>
+        </label>
+
+        <label class="campo" id="categoria-nueva" hidden>
+          <span>Nombre de la nueva categoría</span>
+          <input type="text" id="campo-categoria-nueva" />
+        </label>
+
+        <label class="campo">
+          <span>Precio</span>
+          <input type="text" id="campo-precio" placeholder="Ej: $45.000" />
+        </label>
+
+        <label class="campo">
+          <span>Descripción</span>
+          <textarea id="campo-descripcion" rows="3"></textarea>
+        </label>
+
+        <label class="campo">
+          <span>Detalles</span>
+          <textarea id="campo-detalles" rows="3"></textarea>
+        </label>
+
+        <label class="campo">
+          <span>Usos</span>
+          <textarea id="campo-usos" rows="3"></textarea>
+        </label>
+
+        <div class="campo">
+          <span>Fotos del producto</span>
+          <div class="miniaturas" id="miniaturas"></div>
+        </div>
+
+        <label class="campo">
+          <span>Añadir fotos (puedes elegir varias)</span>
+          <input type="file" id="campo-imagenes" accept="image/*" multiple />
+        </label>
+        <p class="formulario__ayuda">Recomendado 1200 × 900 px (4:3). La web las reduce automáticamente al exportar.</p>
+
+        <div class="formulario__botones">
+          <button type="submit" class="boton-primario" id="boton-guardar">Guardar producto</button>
+          <button type="button" class="boton-secundario" id="boton-cancelar" hidden>Cancelar edición</button>
+        </div>
+      </form>
+
+      <h3 class="admin__subtitulo">Lista de productos</h3>
+      <div id="lista-admin" class="lista-admin"></div>
+    </section>
+
+    <section class="panel" id="pestana-inventario" hidden>
+      <h2 class="admin__titulo">Inventario</h2>
+      <p class="introduccion">Controla cuántas unidades tienes de cada artículo y registra cada venta, reposición o ajuste con su fecha.</p>
+
+      <div class="tarjetas-resumen" id="inventario-resumen"></div>
+
+      <h3 class="admin__subtitulo">Registrar un movimiento</h3>
+      <form id="form-movimiento" class="formulario">
+        <label class="campo">
+          <span>Producto</span>
+          <select id="mov-producto" required></select>
+        </label>
+
+        <label class="campo">
+          <span>Tipo de movimiento</span>
+          <select id="mov-tipo">
+            <option value="venta">Venta (sale stock)</option>
+            <option value="baja">Dar de Baja (no es venta)</option>
+            <option value="reposicion">Reposición (entra stock)</option>
+            <option value="ajuste">Ajuste (fijar stock total)</option>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span id="mov-cantidad-etiqueta">Cuántas unidades</span>
+          <input type="number" id="mov-cantidad" min="1" step="1" required />
+        </label>
+
+        <label class="campo" id="mov-descuento-caja">
+          <span>Descuento en la venta (opcional)</span>
+          <input type="number" id="mov-descuento" min="0" step="1" placeholder="0" />
+        </label>
+
+        <label class="campo">
+          <span>Fecha</span>
+          <input type="date" id="mov-fecha" required />
+        </label>
+
+        <label class="campo">
+          <span>Nota (opcional)</span>
+          <input type="text" id="mov-nota" placeholder="Ej: Vendida en feria de barrio" />
+        </label>
+
+        <div class="formulario__botones">
+          <button type="submit" class="boton-primario">Registrar movimiento</button>
+        </div>
+      </form>
+
+      <h3 class="admin__subtitulo">Stock por producto</h3>
+      <div id="lista-stock" class="lista-admin"></div>
+
+      <h3 class="admin__subtitulo">Historial de movimientos</h3>
+      <div id="lista-movimientos" class="lista-admin"></div>
+    </section>
+
+    <section class="panel" id="pestana-dashboard" hidden>
+      <h2 class="admin__titulo">Dashboard</h2>
+      <p class="introduccion">Evolución de ventas y movimiento de stock según el período que elijas.</p>
+
+      <div class="filtros">
+        <label class="campo">
+          <span>Ver por</span>
+          <select id="dash-modo">
+            <option value="anual">Año completo (por mes)</option>
+            <option value="mensual">Mes completo (por día)</option>
+          </select>
+        </label>
+
+        <label class="campo" id="dash-anio-caja">
+          <span>Año</span>
+          <select id="dash-anio"></select>
+        </label>
+
+        <label class="campo" id="dash-mes-caja" hidden>
+          <span>Mes</span>
+          <select id="dash-mes"></select>
+        </label>
+      </div>
+
+      <div class="tarjetas-resumen" id="dashboard-resumen"></div>
+
+      <h3 class="admin__subtitulo">Ventas en el período</h3>
+      <div id="grafico-ventas"></div>
+
+      <h3 class="admin__subtitulo">Movimiento de stock en el período</h3>
+      <div id="grafico-stock"></div>
+
+      <h3 class="admin__subtitulo">Top 5 más vendidos del período</h3>
+      <div class="tabla-top" id="tabla-top"></div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="inventario.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

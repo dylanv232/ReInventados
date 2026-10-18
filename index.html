@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REINVENTADOS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="encabezado">
+    <h1 class="logo">REINVENTADOS</h1>
+
+    <nav class="menu">
+      <div class="menu__item" id="menu-productos">
+        <button class="menu__boton activo" data-vista="productos">Mis Productos</button>
+        <div class="submenu" id="submenu"></div>
+      </div>
+      <button class="menu__boton" data-vista="hogar">Ya tienen hogar</button>
+      <button class="menu__boton" data-vista="sobre-mi">Sobre mí</button>
+    </nav>
+  </header>
+
+  <main class="contenido">
+    <section id="vista-productos" class="vista activa">
+      <p class="introduccion">Cada pieza, mostrada en distintos contextos. Usa las flechas para verla de nuevo.</p>
+      <div id="galeria" class="galeria"></div>
+    </section>
+
+    <section id="vista-hogar" class="vista">
+      <p class="introduccion">Diseños que ya encontraron su lugar. Gracias por llevarlos a casa.</p>
+      <div id="galeria-hogar" class="galeria"></div>
+    </section>
+
+    <section id="vista-sobre-mi" class="vista">
+      <div class="sobre-mi">
+        <div class="sobre-mi__retrato" aria-hidden="true">Mi foto</div>
+        <div class="sobre-mi__texto">
+          <h2>Sobre mí</h2>
+          <p>Soy la creadora de REINVENTADOS. Elaboro cada producto a mano con técnicas artesanales como macramé, hilograma, puntillismo, orfebrería y alambrismo.</p>
+          <p>Mi historia empieza con las ganas de dar una segunda vida a los materiales y crear piezas únicas que acompañen los espacios de las personas.</p>
+          <h3>Sígueme</h3>
+          <ul class="redes">
+            <li><a href="#" onclick="return false;">Instagram</a></li>
+            <li><a href="#" onclick="return false;">Facebook</a></li>
+            <li><a href="#" onclick="return false;">WhatsApp</a></li>
+            <li><a href="#" onclick="return false;">TikTok</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="vista-detalle" class="vista">
+      <button class="boton-volver" id="boton-volver">&larr; Volver</button>
+      <div id="detalle" class="detalle"></div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
