@@ -862,8 +862,8 @@ window.INVENTARIO = {
       "nombre": "Carrito de traslado",
       "fecha": "2026-10-01",
       "cantidad": 1,
-      "valorUnitario": 24999,
-      "total": 24999,
+      "valorUnitario": 25000,
+      "total": 25000,
       "id": "costo-1792428095710-7986"
     },
     {
