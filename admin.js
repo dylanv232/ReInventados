@@ -1126,13 +1126,7 @@ function desgloseCostosEntre(desde, hasta) {
   if (fin < desde) return desglose;
   state.inventario.costos.forEach(function (costo) {
     if (costo.tipo === "fijo") {
-      if (costo.periodo === "diario") {
-        const inicio = costo.fecha > desde ? costo.fecha : desde;
-        if (inicio > fin) return;
-        desglose.fijos += costo.valor * contarDias(inicio, fin);
-      } else if (costo.periodo === "semanal") {
-        if (costo.fecha <= fin) desglose.fijos += costo.valor;
-      } else {
+      if (costo.periodo === "mensual") {
         const primero = new Date(desde + "T00:00:00");
         const ultimo = new Date(fin + "T00:00:00");
         let anio = primero.getFullYear();
@@ -1150,6 +1144,8 @@ function desgloseCostosEntre(desde, hasta) {
           }
           seguridad++;
         }
+      } else {
+        if (costo.fecha >= desde && costo.fecha <= fin) desglose.fijos += costo.valor;
       }
     } else if (costo.tipo === "inversion") {
       if (costo.fecha >= desde && costo.fecha <= fin) desglose.inversion += costo.total;
