@@ -783,5 +783,88 @@ window.INVENTARIO = {
       "nota": "Carga inicial del inventario",
       "precio": null
     }
+  ],
+  "costos": [
+    {
+      "tipo": "inversion",
+      "nombre": "Carrito de traslado",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 24999,
+      "total": 24999,
+      "id": "costo-1792428095710-7986"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Decoración",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1792428080136-1044"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Colgador Maniquí",
+      "fecha": "2026-10-01",
+      "cantidad": 2,
+      "valorUnitario": 1500,
+      "total": 3000,
+      "id": "costo-1792428057536-6747"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Inscripción a agrupación",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1792428018299-8017"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Guirnalda de luces",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1792427927483-5894"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Tela Dacron 6x3m",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 12500,
+      "total": 12500,
+      "id": "costo-1792427908139-6042"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Mesa Plegable",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 23000,
+      "total": 23000,
+      "id": "costo-1792427869350-2439"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Lona 4x6m",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 18000,
+      "total": 18000,
+      "id": "costo-1792427846869-8910"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Toldo 3x3m",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 27000,
+      "total": 27000,
+      "id": "costo-1792427786519-4451"
+    }
   ]
 };
