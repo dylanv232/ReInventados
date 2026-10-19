@@ -99,8 +99,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "pulsera": {
-      "cantidad": 66,
-      "actualizado": "2026-10-11"
+      "cantidad": 68,
+      "actualizado": "2026-10-18"
     },
     "minimurales": {
       "cantidad": 3,
@@ -120,18 +120,6 @@ window.INVENTARIO = {
     }
   },
   "movimientos": [
-    {
-      "id": "mov-1792430697760-2869",
-      "productoId": "pulsera",
-      "productoNombre": "Pulsera",
-      "tipo": "venta",
-      "cantidad": 2,
-      "delta": -2,
-      "fecha": "2026-10-11",
-      "nota": "",
-      "precio": 2500,
-      "descuento": 0
-    },
     {
       "id": "mov-1792373637134-2842",
       "productoId": "pulsera",
@@ -796,5 +784,159 @@ window.INVENTARIO = {
       "precio": null
     }
   ],
-  "costos": []
+  "costos": [
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-18",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428460873-3685"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-17",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428448545-1810"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-16",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428437156-8733"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-11",
+      "valor": 3500,
+      "periodo": "diario",
+      "id": "costo-1792428415228-5019"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por dia de agrupación",
+      "fecha": "2026-10-10",
+      "valor": 3500,
+      "periodo": "diario",
+      "id": "costo-1792428396228-5329"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por dia de agrupación",
+      "fecha": "2026-10-04",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428373070-9213"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por dia de agrupacón",
+      "fecha": "2026-10-03",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428349198-9375"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por dia de agrupación",
+      "fecha": "2026-10-02",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428324264-8660"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota agrupación mensual",
+      "fecha": "2026-10-02",
+      "valor": 5000,
+      "periodo": "mensual",
+      "id": "costo-1792428224066-8472"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Carrito de traslado",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 25000,
+      "total": 25000,
+      "id": "costo-1792428095710-7986"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Decoración",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1792428080136-1044"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Colgador Maniquí",
+      "fecha": "2026-10-01",
+      "cantidad": 2,
+      "valorUnitario": 1500,
+      "total": 3000,
+      "id": "costo-1792428057536-6747"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Inscripción a agrupación",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1792428018299-8017"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Guirnalda de luces",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1792427927483-5894"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Tela Dacron 6x3m",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 12500,
+      "total": 12500,
+      "id": "costo-1792427908139-6042"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Mesa Plegable",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 23000,
+      "total": 23000,
+      "id": "costo-1792427869350-2439"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Lona 4x6m",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 18000,
+      "total": 18000,
+      "id": "costo-1792427846869-8910"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Toldo 3x3m",
+      "fecha": "2026-10-01",
+      "cantidad": 1,
+      "valorUnitario": 27000,
+      "total": 27000,
+      "id": "costo-1792427786519-4451"
+    }
+  ]
 };
