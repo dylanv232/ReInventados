@@ -1060,8 +1060,16 @@ code {
   border-bottom: none;
 }
 
-.flujo__total .flujo__label {
+.flujo__total td {
   font-weight: 700;
+}
+
+.flujo__ingreso {
+  color: var(--verde);
+}
+
+.flujo__costo {
+  color: #a33;
 }
 
 .flujo__celda--vacio {
@@ -1070,12 +1078,12 @@ code {
 
 .flujo__neto--negativo {
   color: #a33;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .flujo__neto--positivo {
   color: var(--verde);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 @media (max-width: 720px) {

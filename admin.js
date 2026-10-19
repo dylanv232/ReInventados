@@ -1289,7 +1289,7 @@ function renderTablaFlujo() {
     cuerpo.appendChild(fila);
   }
 
-  function filaDatos(etiqueta, celdas, claseFila) {
+  function filaDatos(etiqueta, celdas, claseFila, tono) {
     const fila = document.createElement("tr");
     if (claseFila) fila.className = claseFila;
     const primera = document.createElement("td");
@@ -1298,7 +1298,10 @@ function renderTablaFlujo() {
     fila.appendChild(primera);
     celdas.forEach(function (info) {
       const td = document.createElement("td");
-      td.className = "tabla-top__numero" + (info.clase ? " " + info.clase : "");
+      let clases = "tabla-top__numero";
+      if (tono && info.clase.indexOf("flujo__celda--vacio") === -1) clases += " " + tono;
+      if (info.clase) clases += " " + info.clase;
+      td.className = clases;
       td.textContent = info.texto;
       fila.appendChild(td);
     });
@@ -1309,24 +1312,24 @@ function renderTablaFlujo() {
   filaTitulo("Detalle ingresos");
   filaDatos("Ingresos por ventas", semanas.map(function (semana) {
     return monto(semana.ventas);
-  }));
+  }), null, "flujo__ingreso");
   filaDatos("Total", semanas.map(function (semana) {
     return monto(semana.ventas);
-  }), "flujo__total");
+  }), "flujo__total", "flujo__ingreso");
   filaSeparadora();
   filaTitulo("Detalle egresos");
   filaDatos("Inversión inicial", semanas.map(function (semana) {
     return monto(semana.inversion);
-  }));
+  }), null, "flujo__costo");
   filaDatos("Costos fijos", semanas.map(function (semana) {
     return monto(semana.fijos);
-  }));
+  }), null, "flujo__costo");
   filaDatos("Costos variables", semanas.map(function (semana) {
     return monto(semana.variables);
-  }));
+  }), null, "flujo__costo");
   filaDatos("Total", semanas.map(function (semana) {
     return monto(semana.egresos);
-  }), "flujo__total");
+  }), "flujo__total", "flujo__costo");
   filaSeparadora();
   filaTitulo("Saldos");
   filaDatos("Saldo neto", semanas.map(function (semana) {
