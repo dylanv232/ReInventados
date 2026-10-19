@@ -39,11 +39,12 @@ const selectDashAnio = document.getElementById("dash-anio");
 const selectDashMes = document.getElementById("dash-mes");
 const dashboardResumen = document.getElementById("dashboard-resumen");
 const graficoVentas = document.getElementById("grafico-ventas");
-const graficoStock = document.getElementById("grafico-stock");
+const graficoSemana = document.getElementById("grafico-semana");
 const tablaTop = document.getElementById("tabla-top");
 
 const MESES_LARGOS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+const DIAS_CORTOS = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"];
 
 const state = {
   productos: [],
@@ -712,6 +713,27 @@ function resolverPeriodo() {
   return null;
 }
 
+function lunesDeLaSemana(fecha) {
+  const partes = fecha.split("-");
+  const dia = new Date(parseInt(partes[0], 10), parseInt(partes[1], 10) - 1, parseInt(partes[2], 10));
+  const desfase = (dia.getDay() + 6) % 7;
+  dia.setDate(dia.getDate() - desfase);
+  return fechaISO(dia);
+}
+
+function construirSerieSemana(desde) {
+  const serie = [];
+  const inicio = new Date(desde + "T00:00:00");
+  for (let i = 0; i < 7; i++) {
+    const fecha = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate() + i);
+    serie.push({
+      clave: fechaISO(fecha),
+      etiqueta: DIAS_CORTOS[i] + " " + fecha.getDate()
+    });
+  }
+  return serie;
+}
+
 function construirSeries(periodo) {
   const series = [];
   if (periodo.agrupacion === "dia") {
@@ -854,6 +876,18 @@ function renderDashboard() {
   renderSelectsDashboard();
   dashboardResumen.innerHTML = "";
 
+  const serieSemana = construirSerieSemana(lunesDeLaSemana(hoyISO()));
+  const mapaSemana = {};
+  serieSemana.forEach(function (dia) {
+    mapaSemana[dia.clave] = { ventas: 0 };
+  });
+  state.inventario.movimientos.forEach(function (mov) {
+    if (mov.tipo !== "venta") return;
+    if (!mapaSemana[mov.fecha]) return;
+    mapaSemana[mov.fecha].ventas += (mov.precio !== null ? mov.precio * mov.cantidad : 0) - (mov.descuento || 0);
+  });
+  renderGrafico(graficoSemana, serieSemana, mapaSemana, "ventas");
+
   const periodo = resolverPeriodo();
   if (!periodo) {
     const aviso = document.createElement("p");
@@ -861,8 +895,6 @@ function renderDashboard() {
     aviso.textContent = "Elige un año para ver los datos.";
     graficoVentas.innerHTML = "";
     graficoVentas.appendChild(aviso);
-    graficoStock.innerHTML = "";
-    graficoStock.appendChild(aviso.cloneNode(true));
     tablaTop.innerHTML = "";
     return;
   }
@@ -880,7 +912,7 @@ function renderDashboard() {
 
   delPeriodo.forEach(function (mov) {
     const clave = periodo.agrupacion === "dia" ? mov.fecha : mov.fecha.slice(0, 7);
-    if (!mapa[clave]) mapa[clave] = { ventas: 0, entradas: 0, salidas: 0 };
+    if (!mapa[clave]) mapa[clave] = { ventas: 0 };
     if (mov.tipo === "venta") {
       unidadesVendidas += mov.cantidad;
       const ingreso = (mov.precio !== null ? mov.precio * mov.cantidad : 0) - (mov.descuento || 0);
@@ -891,11 +923,6 @@ function renderDashboard() {
     if (mov.tipo === "baja") {
       bajas += mov.cantidad;
       bajasPorProducto[mov.productoId] = (bajasPorProducto[mov.productoId] || 0) + mov.cantidad;
-    }
-    if (mov.delta > 0) {
-      mapa[clave].entradas += mov.delta;
-    } else if (mov.delta < 0) {
-      mapa[clave].salidas += -mov.delta;
     }
   });
 
@@ -926,7 +953,6 @@ function renderDashboard() {
 
   const series = construirSeries(periodo);
   renderGrafico(graficoVentas, series, mapa, "ventas");
-  renderGrafico(graficoStock, series, mapa, "stock");
   renderTablaTop(vendidosPorProducto, bajasPorProducto, deltasDesde, deltasDespues);
 }
 
