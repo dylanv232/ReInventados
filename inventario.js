@@ -3,8 +3,8 @@
 window.INVENTARIO = {
   "stock": {
     "aros": {
-      "cantidad": 42,
-      "actualizado": "2026-10-16"
+      "cantidad": 40,
+      "actualizado": "2026-10-18"
     },
     "atrapasuenos-azul": {
       "cantidad": 1,
@@ -99,8 +99,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "pulsera": {
-      "cantidad": 70,
-      "actualizado": "2026-10-17"
+      "cantidad": 68,
+      "actualizado": "2026-10-18"
     },
     "minimurales": {
       "cantidad": 3,
@@ -120,6 +120,42 @@ window.INVENTARIO = {
     }
   },
   "movimientos": [
+    {
+      "id": "mov-1792373637134-2842",
+      "productoId": "pulsera",
+      "productoNombre": "Pulsera",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-10-18",
+      "nota": "",
+      "precio": 2500,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1792373612696-3298",
+      "productoId": "aros",
+      "productoNombre": "Aros",
+      "tipo": "venta",
+      "cantidad": 2,
+      "delta": -2,
+      "fecha": "2026-10-18",
+      "nota": "Pedido",
+      "precio": 3000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1792350738464-3482",
+      "productoId": "pulsera",
+      "productoNombre": "Pulsera",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-10-18",
+      "nota": "",
+      "precio": 2500,
+      "descuento": 0
+    },
     {
       "id": "mov-venta-porta-macetero-verde-1710",
       "productoId": "porta-macetero-verde",
