@@ -786,6 +786,14 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
+      "tipo": "fijo",
+      "nombre": "Cuota agrupación mensual",
+      "fecha": "2026-10-02",
+      "valor": 5000,
+      "periodo": "mensual",
+      "id": "costo-1792428224066-8472"
+    },
+    {
       "tipo": "inversion",
       "nombre": "Carrito de traslado",
       "fecha": "2026-10-01",
