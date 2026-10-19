@@ -787,6 +787,33 @@ window.INVENTARIO = {
   "costos": [
     {
       "tipo": "variable",
+      "nombre": "Colafria 500 ml",
+      "fecha": "2026-10-04",
+      "cantidad": 1,
+      "valorUnitario": 2150,
+      "total": 2150,
+      "id": "costo-1792442412308-8645"
+    },
+    {
+      "tipo": "variable",
+      "nombre": "Luces led diseños 1m",
+      "fecha": "2026-10-04",
+      "cantidad": 12,
+      "valorUnitario": 250,
+      "total": 3000,
+      "id": "costo-1792442394020-2743"
+    },
+    {
+      "tipo": "variable",
+      "nombre": "Bolsa papel craft",
+      "fecha": "2026-10-04",
+      "cantidad": 50,
+      "valorUnitario": 19,
+      "total": 950,
+      "id": "costo-1792442377476-6861"
+    },
+    {
+      "tipo": "variable",
       "nombre": "Cuerda algodón 500m*3mm",
       "fecha": "2026-10-04",
       "cantidad": 3,
