@@ -787,6 +787,15 @@ window.INVENTARIO = {
   "costos": [
     {
       "tipo": "variable",
+      "nombre": "Traslado",
+      "fecha": "2026-10-04",
+      "cantidad": 3,
+      "valorUnitario": 2000,
+      "total": 6000,
+      "id": "costo-1792442507259-9928"
+    },
+    {
+      "tipo": "variable",
       "nombre": "Entretela 1m",
       "fecha": "2026-10-04",
       "cantidad": 1,
