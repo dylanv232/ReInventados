@@ -38,6 +38,24 @@ const listaStock = document.getElementById("lista-stock");
 const listaMovimientos = document.getElementById("lista-movimientos");
 const inventarioResumen = document.getElementById("inventario-resumen");
 
+const formCosto = document.getElementById("form-costo");
+const selectCostoTipo = document.getElementById("costo-tipo");
+const campoCostoNombre = document.getElementById("costo-nombre");
+const campoCostoFecha = document.getElementById("costo-fecha");
+const campoCostoValor = document.getElementById("costo-valor");
+const campoCostoPeriodo = document.getElementById("costo-periodo");
+const campoCostoCantidad = document.getElementById("costo-cantidad");
+const campoCostoUnitario = document.getElementById("costo-unitario");
+const campoCostoTotal = document.getElementById("costo-total");
+const cajaCostoValor = document.getElementById("costo-valor-caja");
+const cajaCostoPeriodo = document.getElementById("costo-periodo-caja");
+const cajaCostoCantidad = document.getElementById("costo-cantidad-caja");
+const cajaCostoUnitario = document.getElementById("costo-unitario-caja");
+const cajaCostoTotal = document.getElementById("costo-total-caja");
+const botonCostoCancelar = document.getElementById("boton-costo-cancelar");
+const formCostoTitulo = document.getElementById("form-costo-titulo");
+const listaCostos = document.getElementById("lista-costos");
+
 const selectDashModo = document.getElementById("dash-modo");
 const selectDashAnio = document.getElementById("dash-anio");
 const selectDashMes = document.getElementById("dash-mes");
@@ -45,6 +63,7 @@ const dashboardResumen = document.getElementById("dashboard-resumen");
 const graficoVentas = document.getElementById("grafico-ventas");
 const graficoSemana = document.getElementById("grafico-semana");
 const tablaTop = document.getElementById("tabla-top");
+const tablaFlujo = document.getElementById("tabla-flujo");
 
 const MESES_LARGOS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
@@ -58,6 +77,7 @@ const state = {
 
 let idEditando = null;
 let imagenesActuales = [];
+let idEditandoCosto = null;
 let avisoAlmacenamientoMostrado = false;
 let relojPublicacion = null;
 let publicacionEnCurso = false;
@@ -159,13 +179,15 @@ function cargar() {
   if (borradorInventario && typeof borradorInventario === "object" && Array.isArray(borradorInventario.movimientos)) {
     state.inventario = {
       stock: borradorInventario.stock || {},
-      movimientos: borradorInventario.movimientos
+      movimientos: borradorInventario.movimientos,
+      costos: Array.isArray(borradorInventario.costos) ? borradorInventario.costos : []
     };
   } else {
     const publicado = clonar(window.INVENTARIO || {});
     state.inventario = {
       stock: publicado.stock || {},
-      movimientos: publicado.movimientos || []
+      movimientos: publicado.movimientos || [],
+      costos: Array.isArray(publicado.costos) ? publicado.costos : []
     };
   }
 
@@ -879,6 +901,339 @@ function renderGrafico(contenedor, series, mapa, tipo) {
   contenedor.appendChild(grafico);
 }
 
+function visibilidadCamposCosto() {
+  const tipo = selectCostoTipo.value;
+  const esFijo = tipo === "fijo";
+  cajaCostoValor.hidden = !esFijo;
+  cajaCostoPeriodo.hidden = !esFijo;
+  cajaCostoCantidad.hidden = esFijo;
+  cajaCostoUnitario.hidden = esFijo;
+  cajaCostoTotal.hidden = esFijo;
+}
+
+function recalcularCosto(origen) {
+  const cantidad = parseFloat(campoCostoCantidad.value);
+  const unitario = parseFloat(campoCostoUnitario.value);
+  const total = parseFloat(campoCostoTotal.value);
+  if (origen === "unitario" && !isNaN(cantidad) && !isNaN(unitario)) {
+    campoCostoTotal.value = String(Math.round(cantidad * unitario));
+  } else if (origen === "total" && !isNaN(cantidad) && cantidad > 0 && !isNaN(total)) {
+    campoCostoUnitario.value = String(Math.round(total / cantidad));
+  } else if (origen === "cantidad" && !isNaN(cantidad) && !isNaN(unitario)) {
+    campoCostoTotal.value = String(Math.round(cantidad * unitario));
+  }
+}
+
+function limpiarFormCosto() {
+  idEditandoCosto = null;
+  selectCostoTipo.value = "fijo";
+  campoCostoNombre.value = "";
+  campoCostoFecha.value = hoyISO();
+  campoCostoValor.value = "";
+  campoCostoPeriodo.value = "mensual";
+  campoCostoCantidad.value = "";
+  campoCostoUnitario.value = "";
+  campoCostoTotal.value = "";
+  botonCostoCancelar.hidden = true;
+  formCostoTitulo.textContent = "Agregar un costo";
+  visibilidadCamposCosto();
+}
+
+function guardarCosto() {
+  const tipo = selectCostoTipo.value;
+  const nombre = campoCostoNombre.value.trim();
+  const fecha = campoCostoFecha.value;
+  if (!nombre) return "Ponle un nombre al costo.";
+  if (!fecha) return "Elige una fecha para el costo.";
+
+  let datos = null;
+  if (tipo === "fijo") {
+    const valor = parseFloat(campoCostoValor.value);
+    if (isNaN(valor) || valor < 0) return "Indica el valor del costo fijo.";
+    datos = {
+      tipo: "fijo",
+      nombre: nombre,
+      fecha: fecha,
+      valor: Math.round(valor),
+      periodo: campoCostoPeriodo.value
+    };
+  } else {
+    const cantidad = parseInt(campoCostoCantidad.value, 10);
+    let unitario = parseFloat(campoCostoUnitario.value);
+    let total = parseFloat(campoCostoTotal.value);
+    if (isNaN(cantidad) || cantidad <= 0) return "Indica la cantidad.";
+    if (isNaN(unitario) && isNaN(total)) return "Coloca el valor unitario o el total; el otro se calcula solo.";
+    if (isNaN(total)) total = cantidad * unitario;
+    if (isNaN(unitario)) unitario = total / cantidad;
+    datos = {
+      tipo: tipo,
+      nombre: nombre,
+      fecha: fecha,
+      cantidad: cantidad,
+      valorUnitario: Math.round(unitario),
+      total: Math.round(total)
+    };
+  }
+
+  if (idEditandoCosto) {
+    let encontrado = false;
+    state.inventario.costos.forEach(function (costo) {
+      if (costo.id === idEditandoCosto) {
+        datos.id = costo.id;
+        Object.keys(datos).forEach(function (clave) { costo[clave] = datos[clave]; });
+        encontrado = true;
+      }
+    });
+    if (!encontrado) datos.id = idEditandoCosto;
+    if (!encontrado) state.inventario.costos.unshift(datos);
+  } else {
+    datos.id = "costo-" + Date.now() + "-" + Math.floor(Math.random() * 10000);
+    state.inventario.costos.unshift(datos);
+  }
+
+  guardarBorrador();
+  renderCostos();
+  renderDashboard();
+  return null;
+}
+
+function editarCosto(id) {
+  let encontrado = null;
+  state.inventario.costos.forEach(function (costo) {
+    if (costo.id === id) encontrado = costo;
+  });
+  if (!encontrado) return;
+  idEditandoCosto = id;
+  selectCostoTipo.value = encontrado.tipo;
+  campoCostoNombre.value = encontrado.nombre;
+  campoCostoFecha.value = encontrado.fecha;
+  campoCostoValor.value = encontrado.tipo === "fijo" ? String(encontrado.valor) : "";
+  campoCostoPeriodo.value = encontrado.tipo === "fijo" ? encontrado.periodo : "mensual";
+  campoCostoCantidad.value = encontrado.tipo === "fijo" ? "" : String(encontrado.cantidad);
+  campoCostoUnitario.value = encontrado.tipo === "fijo" ? "" : String(encontrado.valorUnitario);
+  campoCostoTotal.value = encontrado.tipo === "fijo" ? "" : String(encontrado.total);
+  botonCostoCancelar.hidden = false;
+  formCostoTitulo.textContent = "Editar costo";
+  visibilidadCamposCosto();
+  campoCostoNombre.focus();
+}
+
+function eliminarCosto(id) {
+  if (!confirm("¿Eliminar este costo?")) return;
+  state.inventario.costos = state.inventario.costos.filter(function (costo) {
+    return costo.id !== id;
+  });
+  if (idEditandoCosto === id) limpiarFormCosto();
+  guardarBorrador();
+  renderCostos();
+  renderDashboard();
+}
+
+function renderCostos() {
+  if (document.getElementById("pestana-costos").hidden) return;
+  listaCostos.innerHTML = "";
+
+  if (state.inventario.costos.length === 0) {
+    const vacio = document.createElement("p");
+    vacio.className = "introduccion";
+    vacio.textContent = "Todavía no registraste costos.";
+    listaCostos.appendChild(vacio);
+    return;
+  }
+
+  const etiquetasTipo = { fijo: "Costo fijo", variable: "Costo variable", inversion: "Inversión" };
+  const clasesTipo = { fijo: "insignia insignia--gris", variable: "insignia insignia--alerta", inversion: "insignia insignia--ajuste" };
+  const etiquetasPeriodo = { diario: "Diario", semanal: "Semanal", mensual: "Mensual" };
+
+  state.inventario.costos.forEach(function (costo) {
+    const fila = document.createElement("div");
+    fila.className = "fila-costo";
+
+    const fecha = document.createElement("span");
+    fecha.className = "fila-mov__fecha";
+    fecha.textContent = fechaLegible(costo.fecha);
+
+    const nombre = document.createElement("strong");
+    nombre.textContent = costo.nombre;
+
+    const insignia = document.createElement("span");
+    insignia.className = clasesTipo[costo.tipo] || "insignia";
+    insignia.textContent = etiquetasTipo[costo.tipo] || costo.tipo;
+
+    const detalle = document.createElement("span");
+    detalle.className = "fila-costo__detalle";
+    if (costo.tipo === "fijo") {
+      detalle.textContent = formatoMoneda(costo.valor) + " · " + (etiquetasPeriodo[costo.periodo] || costo.periodo);
+    } else {
+      detalle.textContent = costo.cantidad + " × " + formatoMoneda(costo.valorUnitario) + " = " + formatoMoneda(costo.total);
+      detalle.title = "Total " + formatoMoneda(costo.total);
+    }
+
+    const botonEditar = document.createElement("button");
+    botonEditar.className = "boton-secundario";
+    botonEditar.textContent = "Editar";
+    botonEditar.addEventListener("click", function () {
+      editarCosto(costo.id);
+    });
+
+    const botonQuitar = document.createElement("button");
+    botonQuitar.className = "boton-peligro";
+    botonQuitar.textContent = "Eliminar";
+    botonQuitar.addEventListener("click", function () {
+      eliminarCosto(costo.id);
+    });
+
+    fila.appendChild(fecha);
+    fila.appendChild(nombre);
+    fila.appendChild(insignia);
+    fila.appendChild(detalle);
+    fila.appendChild(botonEditar);
+    fila.appendChild(botonQuitar);
+    listaCostos.appendChild(fila);
+  });
+}
+
+function contarDias(desde, hasta) {
+  function aUTC(iso) {
+    return Date.UTC(
+      parseInt(iso.slice(0, 4), 10),
+      parseInt(iso.slice(5, 7), 10) - 1,
+      parseInt(iso.slice(8, 10), 10)
+    );
+  }
+  return Math.round((aUTC(hasta) - aUTC(desde)) / 86400000) + 1;
+}
+
+function ingresosEntre(desde, hasta) {
+  let total = 0;
+  state.inventario.movimientos.forEach(function (mov) {
+    if (mov.tipo !== "venta") return;
+    if (mov.fecha < desde || mov.fecha > hasta) return;
+    total += (mov.precio !== null ? mov.precio * mov.cantidad : 0) - (mov.descuento || 0);
+  });
+  return total;
+}
+
+function costosEntre(desde, hasta) {
+  let total = 0;
+  const hoy = hoyISO();
+  const fin = hasta < hoy ? hasta : hoy;
+  if (fin < desde) return 0;
+  state.inventario.costos.forEach(function (costo) {
+    if (costo.tipo === "fijo") {
+      if (costo.periodo === "diario") {
+        const inicio = costo.fecha > desde ? costo.fecha : desde;
+        if (inicio > fin) return;
+        total += costo.valor * contarDias(inicio, fin);
+      } else if (costo.periodo === "semanal") {
+        if (costo.fecha <= fin) total += costo.valor;
+      } else {
+        const primero = new Date(desde + "T00:00:00");
+        const ultimo = new Date(fin + "T00:00:00");
+        let anio = primero.getFullYear();
+        let mes = primero.getMonth();
+        let seguridad = 0;
+        while ((anio < ultimo.getFullYear() || (anio === ultimo.getFullYear() && mes <= ultimo.getMonth())) && seguridad < 6) {
+          const ultimoDia = new Date(anio, mes + 1, 0).getDate();
+          const diaCargo = Math.min(parseInt(costo.fecha.slice(8, 10), 10), ultimoDia);
+          const cargo = anio + "-" + String(mes + 1).padStart(2, "0") + "-" + String(diaCargo).padStart(2, "0");
+          if (cargo >= desde && cargo <= fin && cargo >= costo.fecha) total += costo.valor;
+          mes++;
+          if (mes > 11) {
+            mes = 0;
+            anio++;
+          }
+          seguridad++;
+        }
+      }
+    } else {
+      if (costo.fecha >= desde && costo.fecha <= fin) total += costo.total;
+    }
+  });
+  return total;
+}
+
+function etiquetaSemana(inicio, fin) {
+  const mesInicio = MESES_CORTOS[inicio.getMonth()];
+  const mesFin = MESES_CORTOS[fin.getMonth()];
+  if (mesInicio === mesFin) return inicio.getDate() + "–" + fin.getDate() + " " + mesFin;
+  return inicio.getDate() + " " + mesInicio + " – " + fin.getDate() + " " + mesFin;
+}
+
+function calcularFlujoSemanal() {
+  const filas = [];
+  const lunesActual = new Date(lunesDeLaSemana(hoyISO()) + "T00:00:00");
+  for (let i = 11; i >= 0; i--) {
+    const inicio = new Date(lunesActual.getFullYear(), lunesActual.getMonth(), lunesActual.getDate() - i * 7);
+    const fin = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate() + 6);
+    const desde = fechaISO(inicio);
+    const hasta = fechaISO(fin);
+    const ventas = ingresosEntre(desde, hasta);
+    const costos = costosEntre(desde, hasta);
+    filas.push({
+      desde: desde,
+      hasta: hasta,
+      etiqueta: etiquetaSemana(inicio, fin),
+      ventas: ventas,
+      costos: costos,
+      flujo: ventas - costos
+    });
+  }
+  return filas;
+}
+
+function renderTablaFlujo() {
+  tablaFlujo.innerHTML = "";
+  const filas = calcularFlujoSemanal();
+  const conDatos = filas.some(function (fila) { return fila.ventas !== 0 || fila.costos !== 0; });
+  if (!conDatos) {
+    const vacio = document.createElement("p");
+    vacio.className = "introduccion";
+    vacio.textContent = "Sin ventas ni costos en las últimas 12 semanas.";
+    tablaFlujo.appendChild(vacio);
+    return;
+  }
+
+  const tabla = document.createElement("table");
+  tabla.className = "tabla-top__tabla";
+  tabla.innerHTML =
+    "<thead><tr>" +
+    "<th>Semana</th>" +
+    "<th style=\"text-align:right\">Ventas</th>" +
+    "<th style=\"text-align:right\">Costos</th>" +
+    "<th style=\"text-align:right\">Flujo</th>" +
+    "</tr></thead>";
+  const cuerpo = document.createElement("tbody");
+  filas.slice().reverse().forEach(function (fila) {
+    const tr = document.createElement("tr");
+
+    const semana = document.createElement("td");
+    semana.className = "tabla-top__producto";
+    semana.textContent = fila.etiqueta;
+    semana.title = fila.desde + " a " + fila.hasta;
+
+    const ventas = document.createElement("td");
+    ventas.className = "tabla-top__numero";
+    ventas.textContent = fila.ventas > 0 ? formatoMoneda(fila.ventas) : "—";
+
+    const costos = document.createElement("td");
+    costos.className = "tabla-top__numero";
+    costos.textContent = fila.costos > 0 ? formatoMoneda(fila.costos) : "—";
+
+    const flujo = document.createElement("td");
+    flujo.className = "tabla-top__numero" + (fila.flujo < 0 ? " flujo__neto--negativo" : fila.flujo > 0 ? " flujo__neto--positivo" : "");
+    flujo.textContent = formatoMoneda(fila.flujo);
+
+    tr.appendChild(semana);
+    tr.appendChild(ventas);
+    tr.appendChild(costos);
+    tr.appendChild(flujo);
+    cuerpo.appendChild(tr);
+  });
+  tabla.appendChild(cuerpo);
+  tablaFlujo.appendChild(tabla);
+}
+
 function renderDashboard() {
   if (document.getElementById("pestana-dashboard").hidden) return;
 
@@ -896,6 +1251,7 @@ function renderDashboard() {
     mapaSemana[mov.fecha].ventas += (mov.precio !== null ? mov.precio * mov.cantidad : 0) - (mov.descuento || 0);
   });
   renderGrafico(graficoSemana, serieSemana, mapaSemana, "ventas");
+  renderTablaFlujo();
 
   const periodo = resolverPeriodo();
   if (!periodo) {
@@ -1068,13 +1424,14 @@ function actualizarVisibilidadFiltros() {
 }
 
 function mostrarPestana(nombre) {
-  ["productos", "inventario", "dashboard"].forEach(function (pestana) {
+  ["productos", "inventario", "costos", "dashboard"].forEach(function (pestana) {
     document.getElementById("pestana-" + pestana).hidden = pestana !== nombre;
   });
   document.querySelectorAll(".pestanas__boton").forEach(function (boton) {
     boton.classList.toggle("activo", boton.dataset.pestana === nombre);
   });
   if (nombre === "inventario") renderInventario();
+  if (nombre === "costos") renderCostos();
   if (nombre === "dashboard") renderDashboard();
 }
 
@@ -1227,7 +1584,8 @@ function construirContenidoWeb() {
     "// Generado por admin.html\n\n" +
     "window.INVENTARIO = " + JSON.stringify({
       stock: state.inventario.stock,
-      movimientos: state.inventario.movimientos
+      movimientos: state.inventario.movimientos,
+      costos: state.inventario.costos || []
     }, null, 2) + ";\n";
 
   return {
@@ -1556,13 +1914,16 @@ document.getElementById("boton-descartar").addEventListener("click", function ()
   const publicado = clonar(window.INVENTARIO || {});
   state.inventario = {
     stock: publicado.stock || {},
-    movimientos: publicado.movimientos || []
+    movimientos: publicado.movimientos || [],
+    costos: Array.isArray(publicado.costos) ? publicado.costos : []
   };
   asegurarCategorias();
   asegurarStock();
   limpiarFormulario();
+  limpiarFormCosto();
   renderLista();
   renderInventario();
+  renderCostos();
   renderDashboard();
   origenDatos.textContent = "Estás trabajando con los datos publicados actualmente en la web.";
 });
@@ -1743,6 +2104,21 @@ renderMiniaturas();
 renderLista();
 actualizarVisibilidadFiltros();
 campoMovFecha.value = hoyISO();
+limpiarFormCosto();
+selectCostoTipo.addEventListener("change", visibilidadCamposCosto);
+campoCostoUnitario.addEventListener("input", function () { recalcularCosto("unitario"); });
+campoCostoTotal.addEventListener("input", function () { recalcularCosto("total"); });
+campoCostoCantidad.addEventListener("input", function () { recalcularCosto("cantidad"); });
+formCosto.addEventListener("submit", function (evento) {
+  evento.preventDefault();
+  const error = guardarCosto();
+  if (error) {
+    alert(error);
+    return;
+  }
+  limpiarFormCosto();
+});
+botonCostoCancelar.addEventListener("click", limpiarFormCosto);
 try {
   campoTokenGitHub.value = localStorage.getItem(CLAVE_TOKEN_GITHUB) || "";
 } catch (error) {}

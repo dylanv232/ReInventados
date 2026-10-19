@@ -19,6 +19,7 @@
     <nav class="pestanas" id="pestanas">
       <button type="button" class="pestanas__boton activo" data-pestana="productos">Productos</button>
       <button type="button" class="pestanas__boton" data-pestana="inventario">Inventario</button>
+      <button type="button" class="pestanas__boton" data-pestana="costos">Costos</button>
       <button type="button" class="pestanas__boton" data-pestana="dashboard">Dashboard</button>
     </nav>
 
@@ -176,6 +177,70 @@
       <div id="lista-movimientos" class="lista-admin"></div>
     </section>
 
+    <section class="panel" id="pestana-costos" hidden>
+      <h2 class="admin__titulo">Costos</h2>
+      <p class="introduccion">Registra tus costos fijos, costos variables e inversiones iniciales. Se reflejan en el flujo de caja semanal del Dashboard.</p>
+
+      <h3 class="admin__subtitulo" id="form-costo-titulo">Agregar un costo</h3>
+      <form id="form-costo" class="formulario">
+        <label class="campo">
+          <span>Tipo de costo</span>
+          <select id="costo-tipo">
+            <option value="fijo">Costo fijo (se repite: diario, semanal o mensual)</option>
+            <option value="variable">Costo variable (compra puntual)</option>
+            <option value="inversion">Inversión inicial</option>
+          </select>
+        </label>
+
+        <label class="campo">
+          <span>Nombre</span>
+          <input type="text" id="costo-nombre" placeholder="Ej: Arriendo del taller" />
+        </label>
+
+        <label class="campo">
+          <span>Fecha</span>
+          <input type="date" id="costo-fecha" />
+        </label>
+
+        <label class="campo" id="costo-valor-caja">
+          <span>Valor ($)</span>
+          <input type="number" id="costo-valor" min="0" step="1" placeholder="0" />
+        </label>
+
+        <label class="campo" id="costo-periodo-caja">
+          <span>¿Cada cuánto se cobra o abarca?</span>
+          <select id="costo-periodo">
+            <option value="diario">Diario</option>
+            <option value="semanal">Semanal</option>
+            <option value="mensual" selected>Mensual</option>
+          </select>
+        </label>
+
+        <label class="campo" id="costo-cantidad-caja" hidden>
+          <span>Cantidad</span>
+          <input type="number" id="costo-cantidad" min="1" step="1" placeholder="1" />
+        </label>
+
+        <label class="campo" id="costo-unitario-caja" hidden>
+          <span>Valor unitario ($)</span>
+          <input type="number" id="costo-unitario" min="0" step="1" placeholder="Se calcula del total" />
+        </label>
+
+        <label class="campo" id="costo-total-caja" hidden>
+          <span>Total ($)</span>
+          <input type="number" id="costo-total" min="0" step="1" placeholder="Se calcula del unitario" />
+        </label>
+
+        <div class="formulario__botones">
+          <button type="submit" class="boton-primario" id="boton-costo-guardar">Guardar costo</button>
+          <button type="button" class="boton-secundario" id="boton-costo-cancelar" hidden>Cancelar edición</button>
+        </div>
+      </form>
+
+      <h3 class="admin__subtitulo">Costos registrados</h3>
+      <div id="lista-costos" class="lista-admin"></div>
+    </section>
+
     <section class="panel" id="pestana-dashboard" hidden>
       <h2 class="admin__titulo">Dashboard</h2>
       <p class="introduccion">Evolución de ventas y movimiento de stock según el período que elijas.</p>
@@ -210,6 +275,9 @@
 
       <h3 class="admin__subtitulo">Top 5 más vendidos del período</h3>
       <div class="tabla-top" id="tabla-top"></div>
+
+      <h3 class="admin__subtitulo">Flujo de caja por semana (últimas 12 semanas)</h3>
+      <div class="tabla-top" id="tabla-flujo"></div>
     </section>
   </main>
 

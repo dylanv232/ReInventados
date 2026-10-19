@@ -842,6 +842,27 @@ code {
   white-space: nowrap;
 }
 
+.fila-costo {
+  display: grid;
+  grid-template-columns: auto 1fr auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  font-size: 0.9rem;
+}
+
+.fila-costo__detalle {
+  color: var(--gris);
+  font-size: 0.82rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .grafico {
   background: var(--tarjeta);
   border: 1px solid var(--borde);
@@ -997,6 +1018,16 @@ code {
   border: 1px solid var(--borde);
   border-radius: 4px;
   font-size: 0.85rem;
+}
+
+.flujo__neto--negativo {
+  color: #a33;
+  font-weight: 600;
+}
+
+.flujo__neto--positivo {
+  color: var(--verde);
+  font-weight: 600;
 }
 
 @media (max-width: 720px) {
