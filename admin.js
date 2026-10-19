@@ -20,6 +20,10 @@ const origenDatos = document.getElementById("origen-datos");
 const formPublicar = document.getElementById("form-publicar");
 const campoTokenGitHub = document.getElementById("github-token");
 const avisoPublicar = document.getElementById("publicar-aviso");
+const avisoPublicacionAuto = document.getElementById("aviso-publicacion-auto");
+const campoAutoPublicacion = document.getElementById("publicacion-automatica");
+const CLAVE_PUBLICACION_AUTO = "reinventados_publicacion_auto";
+const RETRASO_PUBLICACION_AUTO = 10000;
 
 const formMovimiento = document.getElementById("form-movimiento");
 const selectMovProducto = document.getElementById("mov-producto");
@@ -55,6 +59,10 @@ const state = {
 let idEditando = null;
 let imagenesActuales = [];
 let avisoAlmacenamientoMostrado = false;
+let relojPublicacion = null;
+let publicacionEnCurso = false;
+let publicacionEnCola = false;
+let avisoSinTokenMostrado = false;
 
 function clonar(lista) {
   return JSON.parse(JSON.stringify(lista));
@@ -180,6 +188,7 @@ function guardarBorrador() {
   try {
     localStorage.setItem(CLAVE_INVENTARIO, JSON.stringify(state.inventario));
   } catch (error) {}
+  programarPublicacionAutomatica();
 }
 
 function aplicarMovimiento(producto, tipo, cantidad, fecha, nota, descuento) {
@@ -1036,6 +1045,7 @@ function renderTablaTop(vendidosPorProducto, bajasPorProducto, deltasDesde, delt
       try {
         localStorage.setItem(CLAVE_INVENTARIO, JSON.stringify(state.inventario));
       } catch (error) {}
+      programarPublicacionAutomatica();
     });
     deseado.appendChild(campo);
 
@@ -1302,15 +1312,25 @@ function cambiosPublicables() {
   return lista;
 }
 
-async function publicarGitHub() {
-  const token = campoTokenGitHub.value.trim();
-  if (!token) {
-    avisoPublicar.textContent = "Pega tu token de GitHub para publicar.";
-    return;
+function mensajeErrorPublicacion(error) {
+  let mensaje = error.message;
+  if (error.estado === 401) {
+    mensaje = "Token inválido o expirado (401).";
+  } else if (error.estado === 403) {
+    mensaje = "El token no tiene permiso sobre el repositorio (403).";
+  } else if (error.estado === 409) {
+    mensaje = "El repositorio cambió mientras publicabas; inténtalo otra vez (409).";
+  } else if (String(mensaje).indexOf("Failed to fetch") !== -1) {
+    mensaje = "sin conexión a internet.";
   }
-  localStorage.setItem(CLAVE_TOKEN_GITHUB, token);
+  return mensaje;
+}
 
-  avisoPublicar.textContent = "Revisando cambios…";
+async function sincronizarGitHub(token, progreso) {
+  function decir(texto) {
+    if (progreso) progreso(texto);
+  }
+  decir("Revisando cambios…");
   const rutaRepo = "/repos/" + DUENO_REPO + "/" + NOMBRE_REPO;
   const arbol = await llamarGitHub(rutaRepo + "/git/trees/main?recursive=1", "GET", null, token);
   const ref = await llamarGitHub(rutaRepo + "/git/ref/heads/main", "GET", null, token);
@@ -1331,11 +1351,10 @@ async function publicarGitHub() {
   }
 
   if (pendientes.length === 0) {
-    avisoPublicar.textContent = "Todo ya está publicado ✓ (no hay cambios).";
-    return;
+    return { estado: "sin-cambios", archivos: 0 };
   }
 
-  avisoPublicar.textContent = "Subiendo " + pendientes.length + " archivo(s)…";
+  decir("Subiendo " + pendientes.length + " archivo(s)…");
   const entradas = [];
   for (let j = 0; j < pendientes.length; j++) {
     const pendiente = pendientes[j];
@@ -1356,36 +1375,137 @@ async function publicarGitHub() {
 
   await llamarGitHub(rutaRepo + "/git/refs/heads/main", "PATCH", { sha: commit.sha }, token);
 
-  avisoPublicar.textContent = "Publicado ✓ (" + pendientes.length + " archivo(s)). GitHub Pages lo mostrará en ~1 minuto.";
+  return { estado: "publicado", archivos: pendientes.length };
+}
+
+async function publicarGitHub() {
+  const token = campoTokenGitHub.value.trim();
+  if (!token) {
+    avisoPublicar.textContent = "Pega tu token de GitHub para publicar.";
+    return;
+  }
+  localStorage.setItem(CLAVE_TOKEN_GITHUB, token);
+  const resultado = await sincronizarGitHub(token, function (texto) {
+    avisoPublicar.textContent = texto;
+  });
+  if (resultado.estado === "sin-cambios") {
+    avisoPublicar.textContent = "Todo ya está publicado ✓ (no hay cambios).";
+  } else {
+    avisoPublicar.textContent = "Publicado ✓ (" + resultado.archivos + " archivo(s)). GitHub Pages lo mostrará en ~1 minuto.";
+  }
+}
+
+function publicacionAutomaticaActiva() {
+  try {
+    return localStorage.getItem(CLAVE_PUBLICACION_AUTO) !== "0";
+  } catch (error) {
+    return true;
+  }
+}
+
+function mostrarAvisoPublicacionAuto(texto, tipo) {
+  avisoPublicacionAuto.textContent = texto;
+  avisoPublicacionAuto.className = "aviso-publicacion-auto aviso-publicacion-auto--" + tipo;
+  avisoPublicacionAuto.hidden = false;
+}
+
+function ocultarAvisoPublicacionAuto() {
+  avisoPublicacionAuto.hidden = true;
+}
+
+function programarPublicacionAutomatica(silencioso) {
+  if (!publicacionAutomaticaActiva()) return;
+  if (relojPublicacion) clearTimeout(relojPublicacion);
+  if (!silencioso) {
+    mostrarAvisoPublicacionAuto("Cambios sin publicar…", "esperando");
+  }
+  relojPublicacion = setTimeout(publicarAutomaticamente, RETRASO_PUBLICACION_AUTO);
+}
+
+async function publicarAutomaticamente() {
+  relojPublicacion = null;
+  if (publicacionEnCurso) {
+    publicacionEnCola = true;
+    return;
+  }
+  const token = campoTokenGitHub.value.trim();
+  if (!token) {
+    if (!avisoSinTokenMostrado) {
+      avisoSinTokenMostrado = true;
+      mostrarAvisoPublicacionAuto("Publicación automática pausada: pega tu token en la pestaña Productos.", "error");
+      setTimeout(ocultarAvisoPublicacionAuto, 8000);
+    }
+    return;
+  }
+  publicacionEnCurso = true;
+  try {
+    const resultado = await sincronizarGitHub(token, function (texto) {
+      mostrarAvisoPublicacionAuto(texto, "esperando");
+    });
+    localStorage.setItem(CLAVE_TOKEN_GITHUB, token);
+    if (resultado.estado === "sin-cambios") {
+      ocultarAvisoPublicacionAuto();
+    } else {
+      mostrarAvisoPublicacionAuto("Publicado ✓ (" + resultado.archivos + " archivo(s)). GitHub Pages lo mostrará en ~1 minuto.", "ok");
+      setTimeout(ocultarAvisoPublicacionAuto, 6000);
+    }
+  } catch (error) {
+    mostrarAvisoPublicacionAuto("Error al publicar: " + mensajeErrorPublicacion(error), "error");
+  } finally {
+    publicacionEnCurso = false;
+    if (publicacionEnCola) {
+      publicacionEnCola = false;
+      programarPublicacionAutomatica();
+    }
+  }
 }
 
 formPublicar.addEventListener("submit", async function (evento) {
   evento.preventDefault();
+  if (publicacionEnCurso) {
+    avisoPublicar.textContent = "Ya se está publicando…";
+    return;
+  }
   document.getElementById("boton-publicar").disabled = true;
   avisoPublicar.textContent = "";
+  publicacionEnCurso = true;
   try {
     await publicarGitHub();
   } catch (error) {
-    let mensaje = error.message;
-    if (error.estado === 401) {
-      mensaje = "Token inválido o expirado (401).";
-    } else if (error.estado === 403) {
-      mensaje = "El token no tiene permiso sobre el repositorio (403).";
-    } else if (error.estado === 409) {
-      mensaje = "El repositorio cambió mientras publicabas; inténtalo otra vez (409).";
-    } else if (String(mensaje).indexOf("Failed to fetch") !== -1) {
-      mensaje = "sin conexión a internet.";
-    }
-    avisoPublicar.textContent = "Error al publicar: " + mensaje;
+    avisoPublicar.textContent = "Error al publicar: " + mensajeErrorPublicacion(error);
   } finally {
+    publicacionEnCurso = false;
     document.getElementById("boton-publicar").disabled = false;
+    if (publicacionEnCola) {
+      publicacionEnCola = false;
+      programarPublicacionAutomatica();
+    }
   }
 });
 
 document.getElementById("boton-olvidar-token").addEventListener("click", function () {
   localStorage.removeItem(CLAVE_TOKEN_GITHUB);
   campoTokenGitHub.value = "";
+  avisoSinTokenMostrado = false;
+  if (relojPublicacion) clearTimeout(relojPublicacion);
+  relojPublicacion = null;
+  ocultarAvisoPublicacionAuto();
   avisoPublicar.textContent = "Token olvidado.";
+});
+
+campoAutoPublicacion.checked = publicacionAutomaticaActiva();
+campoAutoPublicacion.addEventListener("change", function () {
+  try {
+    localStorage.setItem(CLAVE_PUBLICACION_AUTO, campoAutoPublicacion.checked ? "1" : "0");
+  } catch (error) {}
+  if (campoAutoPublicacion.checked) {
+    avisoSinTokenMostrado = false;
+    programarPublicacionAutomatica(true);
+  } else {
+    if (relojPublicacion) clearTimeout(relojPublicacion);
+    relojPublicacion = null;
+    ocultarAvisoPublicacionAuto();
+  }
 });
 
 document.getElementById("boton-exportar").addEventListener("click", function () {
@@ -1626,3 +1746,6 @@ campoMovFecha.value = hoyISO();
 try {
   campoTokenGitHub.value = localStorage.getItem(CLAVE_TOKEN_GITHUB) || "";
 } catch (error) {}
+if (campoTokenGitHub.value.trim() && publicacionAutomaticaActiva()) {
+  programarPublicacionAutomatica(true);
+}

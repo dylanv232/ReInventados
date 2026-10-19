@@ -30,8 +30,8 @@
         <strong>Cómo publicar tus cambios</strong>
         <ol>
           <li>Agrega o edita tus productos aquí. Las fotos se reducen solas.</li>
-          <li>Pulsa <em>Publicar cambios en GitHub</em> (la primera vez pegas tu token; queda guardado solo en este navegador).</li>
-          <li>La web se actualiza sola en ~1 minuto. No hace falta exportar nada.</li>
+          <li>La web se publica sola ~10 segundos después de cada cambio (la primera vez pegas tu token en el formulario de abajo; queda guardado solo en este navegador).</li>
+          <li>GitHub Pages la actualiza en ~1 minuto. No hace falta exportar nada.</li>
         </ol>
         <p>Sin internet a mano, la alternativa sigue siendo: <em>Exportar web (.zip)</em> → copia el contenido a la carpeta de la web → <code>git push</code>.</p>
       </div>
@@ -50,6 +50,10 @@
         <label class="campo">
           <span>Token de GitHub (queda guardado solo en este navegador)</span>
           <input type="password" id="github-token" placeholder="ghp_..." autocomplete="off" />
+        </label>
+        <label class="campo-casilla">
+          <input type="checkbox" id="publicacion-automatica" checked />
+          <span>Publicar automáticamente tras cada cambio</span>
         </label>
         <div class="formulario__botones">
           <button type="submit" class="boton-primario" id="boton-publicar">Publicar cambios en GitHub</button>
@@ -208,6 +212,8 @@
       <div class="tabla-top" id="tabla-top"></div>
     </section>
   </main>
+
+  <div id="aviso-publicacion-auto" class="aviso-publicacion-auto" hidden></div>
 
   <script src="data.js"></script>
   <script src="inventario.js"></script>
