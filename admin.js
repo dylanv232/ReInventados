@@ -68,6 +68,7 @@ const tablaFlujo = document.getElementById("tabla-flujo");
 const MESES_LARGOS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 const MESES_CORTOS = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
 const DIAS_CORTOS = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"];
+const SEMANA_CERO = "2026-09-21";
 
 const state = {
   productos: [],
@@ -1181,10 +1182,9 @@ function calcularFlujoSemanal() {
   });
   if (!lunesBase) return [];
 
+  const ancla = lunesBase < SEMANA_CERO ? lunesBase : SEMANA_CERO;
   const semanas = [];
-  const inicioBase = new Date(lunesBase + "T00:00:00");
-  inicioBase.setDate(inicioBase.getDate() - 7);
-  const actual = inicioBase;
+  const actual = new Date(ancla + "T00:00:00");
   const limite = fechaISO(lunesActual);
   let numero = 0;
   let acumulado = 0;
