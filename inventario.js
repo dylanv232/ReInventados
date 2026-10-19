@@ -786,6 +786,15 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
+      "tipo": "variable",
+      "nombre": "Cuerda algodón 500m*3mm",
+      "fecha": "2026-10-04",
+      "cantidad": 3,
+      "valorUnitario": 13000,
+      "total": 39000,
+      "id": "costo-1792442347188-16"
+    },
+    {
       "tipo": "fijo",
       "nombre": "Cuota por día de agrupación",
       "fecha": "2026-10-18",
