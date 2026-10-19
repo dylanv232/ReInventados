@@ -1182,9 +1182,11 @@ function calcularFlujoSemanal() {
   if (!lunesBase) return [];
 
   const semanas = [];
-  const actual = new Date(lunesBase + "T00:00:00");
+  const inicioBase = new Date(lunesBase + "T00:00:00");
+  inicioBase.setDate(inicioBase.getDate() - 7);
+  const actual = inicioBase;
   const limite = fechaISO(lunesActual);
-  let numero = 1;
+  let numero = 0;
   let acumulado = 0;
   let seguridad = 0;
   while (fechaISO(actual) <= limite && seguridad < 520) {
