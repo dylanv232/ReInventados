@@ -787,6 +787,33 @@ window.INVENTARIO = {
   "costos": [
     {
       "tipo": "variable",
+      "nombre": "Entretela 1m",
+      "fecha": "2026-10-04",
+      "cantidad": 1,
+      "valorUnitario": 1600,
+      "total": 1600,
+      "id": "costo-1792442479076-670"
+    },
+    {
+      "tipo": "variable",
+      "nombre": "Cancamos",
+      "fecha": "2026-10-04",
+      "cantidad": 1,
+      "valorUnitario": 3500,
+      "total": 3500,
+      "id": "costo-1792442445172-2558"
+    },
+    {
+      "tipo": "variable",
+      "nombre": "Alumbre",
+      "fecha": "2026-10-04",
+      "cantidad": 1,
+      "valorUnitario": 4000,
+      "total": 4000,
+      "id": "costo-1792442429036-8560"
+    },
+    {
+      "tipo": "variable",
       "nombre": "Colafria 500 ml",
       "fecha": "2026-10-04",
       "cantidad": 1,
