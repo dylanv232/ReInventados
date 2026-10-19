@@ -944,7 +944,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Carrito de traslado",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 25000,
       "total": 25000,
@@ -953,7 +953,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Decoración",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 15000,
       "total": 15000,
@@ -962,7 +962,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Colgador Maniquí",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 2,
       "valorUnitario": 1500,
       "total": 3000,
@@ -971,7 +971,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Inscripción a agrupación",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 15000,
       "total": 15000,
@@ -980,7 +980,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Guirnalda de luces",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 15000,
       "total": 15000,
@@ -989,7 +989,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Tela Dacron 6x3m",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 12500,
       "total": 12500,
@@ -998,7 +998,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Mesa Plegable",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 23000,
       "total": 23000,
@@ -1007,7 +1007,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Lona 4x6m",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 18000,
       "total": 18000,
@@ -1016,7 +1016,7 @@ window.INVENTARIO = {
     {
       "tipo": "inversion",
       "nombre": "Toldo 3x3m",
-      "fecha": "2026-10-01",
+      "fecha": "2026-09-27",
       "cantidad": 1,
       "valorUnitario": 27000,
       "total": 27000,
