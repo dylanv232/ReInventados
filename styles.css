@@ -1020,6 +1020,54 @@ code {
   font-size: 0.85rem;
 }
 
+.flujo__tabla {
+  min-width: 760px;
+}
+
+.flujo__tabla th {
+  text-transform: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tinta);
+  white-space: nowrap;
+}
+
+.flujo__label {
+  position: sticky;
+  left: 0;
+  background: var(--tarjeta);
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: inset 0 -1px 0 var(--borde);
+}
+
+.flujo__tabla th.flujo__label {
+  background: #f6f4f1;
+}
+
+.flujo__seccion td {
+  background: #f6f4f1;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--gris);
+}
+
+.flujo__sep td {
+  height: 8px;
+  padding: 0;
+  border-bottom: none;
+}
+
+.flujo__total .flujo__label {
+  font-weight: 700;
+}
+
+.flujo__celda--vacio {
+  color: var(--gris);
+}
+
 .flujo__neto--negativo {
   color: #a33;
   font-weight: 600;

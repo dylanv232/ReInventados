@@ -120,6 +120,11 @@ function formatoMoneda(numero) {
   return "$" + numero.toLocaleString("es-CL");
 }
 
+function formatoSaldo(numero) {
+  if (numero < 0) return "-" + formatoMoneda(-numero);
+  return formatoMoneda(numero);
+}
+
 function asegurarCategorias() {
   state.productos.forEach(function (producto) {
     if (!state.categorias.includes(producto.categoria)) {
@@ -1114,19 +1119,19 @@ function ingresosEntre(desde, hasta) {
   return total;
 }
 
-function costosEntre(desde, hasta) {
-  let total = 0;
+function desgloseCostosEntre(desde, hasta) {
+  const desglose = { inversion: 0, fijos: 0, variables: 0 };
   const hoy = hoyISO();
   const fin = hasta < hoy ? hasta : hoy;
-  if (fin < desde) return 0;
+  if (fin < desde) return desglose;
   state.inventario.costos.forEach(function (costo) {
     if (costo.tipo === "fijo") {
       if (costo.periodo === "diario") {
         const inicio = costo.fecha > desde ? costo.fecha : desde;
         if (inicio > fin) return;
-        total += costo.valor * contarDias(inicio, fin);
+        desglose.fijos += costo.valor * contarDias(inicio, fin);
       } else if (costo.periodo === "semanal") {
-        if (costo.fecha <= fin) total += costo.valor;
+        if (costo.fecha <= fin) desglose.fijos += costo.valor;
       } else {
         const primero = new Date(desde + "T00:00:00");
         const ultimo = new Date(fin + "T00:00:00");
@@ -1137,7 +1142,7 @@ function costosEntre(desde, hasta) {
           const ultimoDia = new Date(anio, mes + 1, 0).getDate();
           const diaCargo = Math.min(parseInt(costo.fecha.slice(8, 10), 10), ultimoDia);
           const cargo = anio + "-" + String(mes + 1).padStart(2, "0") + "-" + String(diaCargo).padStart(2, "0");
-          if (cargo >= desde && cargo <= fin && cargo >= costo.fecha) total += costo.valor;
+          if (cargo >= desde && cargo <= fin && cargo >= costo.fecha) desglose.fijos += costo.valor;
           mes++;
           if (mes > 11) {
             mes = 0;
@@ -1146,11 +1151,18 @@ function costosEntre(desde, hasta) {
           seguridad++;
         }
       }
+    } else if (costo.tipo === "inversion") {
+      if (costo.fecha >= desde && costo.fecha <= fin) desglose.inversion += costo.total;
     } else {
-      if (costo.fecha >= desde && costo.fecha <= fin) total += costo.total;
+      if (costo.fecha >= desde && costo.fecha <= fin) desglose.variables += costo.total;
     }
   });
-  return total;
+  return desglose;
+}
+
+function costosEntre(desde, hasta) {
+  const desglose = desgloseCostosEntre(desde, hasta);
+  return desglose.inversion + desglose.fijos + desglose.variables;
 }
 
 function etiquetaSemana(inicio, fin) {
@@ -1161,75 +1173,171 @@ function etiquetaSemana(inicio, fin) {
 }
 
 function calcularFlujoSemanal() {
-  const filas = [];
   const lunesActual = new Date(lunesDeLaSemana(hoyISO()) + "T00:00:00");
-  for (let i = 11; i >= 0; i--) {
-    const inicio = new Date(lunesActual.getFullYear(), lunesActual.getMonth(), lunesActual.getDate() - i * 7);
+  let lunesBase = null;
+  state.inventario.movimientos.forEach(function (mov) {
+    const lunes = lunesDeLaSemana(mov.fecha);
+    if (!lunesBase || lunes < lunesBase) lunesBase = lunes;
+  });
+  state.inventario.costos.forEach(function (costo) {
+    const lunes = lunesDeLaSemana(costo.fecha);
+    if (!lunesBase || lunes < lunesBase) lunesBase = lunes;
+  });
+  if (!lunesBase) return [];
+
+  const semanas = [];
+  const actual = new Date(lunesBase + "T00:00:00");
+  const limite = fechaISO(lunesActual);
+  let numero = 1;
+  let acumulado = 0;
+  let seguridad = 0;
+  while (fechaISO(actual) <= limite && seguridad < 520) {
+    const inicio = new Date(actual);
     const fin = new Date(inicio.getFullYear(), inicio.getMonth(), inicio.getDate() + 6);
     const desde = fechaISO(inicio);
     const hasta = fechaISO(fin);
     const ventas = ingresosEntre(desde, hasta);
-    const costos = costosEntre(desde, hasta);
-    filas.push({
+    const desglose = desgloseCostosEntre(desde, hasta);
+    const egresos = desglose.inversion + desglose.fijos + desglose.variables;
+    const neto = ventas - egresos;
+    const conActividad = ventas !== 0 || egresos !== 0;
+    acumulado += neto;
+    semanas.push({
       desde: desde,
       hasta: hasta,
+      numero: numero,
       etiqueta: etiquetaSemana(inicio, fin),
       ventas: ventas,
-      costos: costos,
-      flujo: ventas - costos
+      inversion: desglose.inversion,
+      fijos: desglose.fijos,
+      variables: desglose.variables,
+      egresos: egresos,
+      costos: egresos,
+      neto: conActividad ? neto : null,
+      flujo: neto,
+      acumulado: acumulado
     });
+    numero++;
+    actual.setDate(actual.getDate() + 7);
+    seguridad++;
   }
-  return filas;
+  return semanas.slice(-12);
 }
 
 function renderTablaFlujo() {
   tablaFlujo.innerHTML = "";
-  const filas = calcularFlujoSemanal();
-  const conDatos = filas.some(function (fila) { return fila.ventas !== 0 || fila.costos !== 0; });
-  if (!conDatos) {
+  const semanas = calcularFlujoSemanal();
+  if (semanas.length === 0) {
     const vacio = document.createElement("p");
     vacio.className = "introduccion";
-    vacio.textContent = "Sin ventas ni costos en las últimas 12 semanas.";
+    vacio.textContent = "Sin ventas ni costos registrados todavía.";
     tablaFlujo.appendChild(vacio);
     return;
   }
 
+  function celda(texto, clase) {
+    return { texto: texto, clase: clase || "" };
+  }
+
+  function vacia() {
+    return celda("—", "flujo__celda--vacio");
+  }
+
+  function monto(valor) {
+    return valor ? celda(formatoMoneda(valor)) : vacia();
+  }
+
+  function saldo(valor) {
+    if (valor === null) return vacia();
+    if (valor < 0) return celda(formatoSaldo(valor), "flujo__neto--negativo");
+    if (valor > 0) return celda(formatoSaldo(valor), "flujo__neto--positivo");
+    return celda(formatoSaldo(valor));
+  }
+
   const tabla = document.createElement("table");
-  tabla.className = "tabla-top__tabla";
-  tabla.innerHTML =
-    "<thead><tr>" +
-    "<th>Semana</th>" +
-    "<th style=\"text-align:right\">Ventas</th>" +
-    "<th style=\"text-align:right\">Costos</th>" +
-    "<th style=\"text-align:right\">Flujo</th>" +
-    "</tr></thead>";
-  const cuerpo = document.createElement("tbody");
-  filas.slice().reverse().forEach(function (fila) {
-    const tr = document.createElement("tr");
-
-    const semana = document.createElement("td");
-    semana.className = "tabla-top__producto";
-    semana.textContent = fila.etiqueta;
-    semana.title = fila.desde + " a " + fila.hasta;
-
-    const ventas = document.createElement("td");
-    ventas.className = "tabla-top__numero";
-    ventas.textContent = fila.ventas > 0 ? formatoMoneda(fila.ventas) : "—";
-
-    const costos = document.createElement("td");
-    costos.className = "tabla-top__numero";
-    costos.textContent = fila.costos > 0 ? formatoMoneda(fila.costos) : "—";
-
-    const flujo = document.createElement("td");
-    flujo.className = "tabla-top__numero" + (fila.flujo < 0 ? " flujo__neto--negativo" : fila.flujo > 0 ? " flujo__neto--positivo" : "");
-    flujo.textContent = formatoMoneda(fila.flujo);
-
-    tr.appendChild(semana);
-    tr.appendChild(ventas);
-    tr.appendChild(costos);
-    tr.appendChild(flujo);
-    cuerpo.appendChild(tr);
+  tabla.className = "tabla-top__tabla flujo__tabla";
+  let cabecera = "<thead>";
+  cabecera += "<tr><th class=\"flujo__label\">Rango de fecha</th>";
+  semanas.forEach(function (semana) {
+    cabecera += "<th>" + semana.etiqueta + "</th>";
   });
+  cabecera += "</tr>";
+  cabecera += "<tr><th class=\"flujo__label\">N° Semana</th>";
+  semanas.forEach(function (semana) {
+    cabecera += "<th>Semana " + semana.numero + "</th>";
+  });
+  cabecera += "</tr></thead>";
+  tabla.innerHTML = cabecera;
+
+  const cuerpo = document.createElement("tbody");
+  const columnas = semanas.length + 1;
+
+  function filaSeparadora() {
+    const fila = document.createElement("tr");
+    fila.className = "flujo__sep";
+    const celdaUnica = document.createElement("td");
+    celdaUnica.colSpan = columnas;
+    fila.appendChild(celdaUnica);
+    cuerpo.appendChild(fila);
+  }
+
+  function filaTitulo(texto) {
+    const fila = document.createElement("tr");
+    fila.className = "flujo__seccion";
+    const celdaUnica = document.createElement("td");
+    celdaUnica.colSpan = columnas;
+    celdaUnica.textContent = texto;
+    fila.appendChild(celdaUnica);
+    cuerpo.appendChild(fila);
+  }
+
+  function filaDatos(etiqueta, celdas, claseFila) {
+    const fila = document.createElement("tr");
+    if (claseFila) fila.className = claseFila;
+    const primera = document.createElement("td");
+    primera.className = "flujo__label";
+    primera.textContent = etiqueta;
+    fila.appendChild(primera);
+    celdas.forEach(function (info) {
+      const td = document.createElement("td");
+      td.className = "tabla-top__numero" + (info.clase ? " " + info.clase : "");
+      td.textContent = info.texto;
+      fila.appendChild(td);
+    });
+    cuerpo.appendChild(fila);
+  }
+
+  filaSeparadora();
+  filaTitulo("Detalle ingresos");
+  filaDatos("Ingresos por ventas", semanas.map(function (semana) {
+    return monto(semana.ventas);
+  }));
+  filaDatos("Total", semanas.map(function (semana) {
+    return monto(semana.ventas);
+  }), "flujo__total");
+  filaSeparadora();
+  filaTitulo("Detalle egresos");
+  filaDatos("Inversión inicial", semanas.map(function (semana) {
+    return monto(semana.inversion);
+  }));
+  filaDatos("Costos fijos", semanas.map(function (semana) {
+    return monto(semana.fijos);
+  }));
+  filaDatos("Costos variables", semanas.map(function (semana) {
+    return monto(semana.variables);
+  }));
+  filaDatos("Total", semanas.map(function (semana) {
+    return monto(semana.egresos);
+  }), "flujo__total");
+  filaSeparadora();
+  filaTitulo("Saldos");
+  filaDatos("Saldo neto", semanas.map(function (semana) {
+    return saldo(semana.neto);
+  }), "flujo__total");
+  filaDatos("Saldo acumulado", semanas.map(function (semana) {
+    return saldo(semana.acumulado);
+  }), "flujo__total");
+
   tabla.appendChild(cuerpo);
   tablaFlujo.appendChild(tabla);
 }
