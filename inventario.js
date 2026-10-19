@@ -787,6 +787,38 @@ window.INVENTARIO = {
   "costos": [
     {
       "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-18",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428460873-3685"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-17",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428448545-1810"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-16",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428437156-8733"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota por día de agrupación",
+      "fecha": "2026-10-11",
+      "valor": 3500,
+      "periodo": "diario",
+      "id": "costo-1792428415228-5019"
+    },
+    {
+      "tipo": "fijo",
       "nombre": "Cuota por dia de agrupación",
       "fecha": "2026-10-10",
       "valor": 3500,
