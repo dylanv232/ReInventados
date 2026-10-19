@@ -787,6 +787,14 @@ window.INVENTARIO = {
   "costos": [
     {
       "tipo": "fijo",
+      "nombre": "Cuota por dia de agrupación",
+      "fecha": "2026-10-02",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1792428324264-8660"
+    },
+    {
+      "tipo": "fijo",
       "nombre": "Cuota agrupación mensual",
       "fecha": "2026-10-02",
       "valor": 5000,
