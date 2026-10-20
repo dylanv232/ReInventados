@@ -798,20 +798,26 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
-      "tipo": "fijo",
+      "tipo": "variable",
       "nombre": "Cartulina española negra",
       "fecha": "2026-10-13",
       "valor": 800,
       "periodo": "diario",
-      "id": "costo-1792527449144-2615"
+      "id": "costo-1792527449144-2615",
+      "cantidad": 1,
+      "valorUnitario": 800,
+      "total": 800
     },
     {
-      "tipo": "fijo",
+      "tipo": "variable",
       "nombre": "Lanas azul y celeste",
       "fecha": "2026-10-13",
       "valor": 4000,
       "periodo": "diario",
-      "id": "costo-1792527378431-4662"
+      "id": "costo-1792527378431-4662",
+      "cantidad": 1,
+      "valorUnitario": 4000,
+      "total": 4000
     },
     {
       "tipo": "variable",
