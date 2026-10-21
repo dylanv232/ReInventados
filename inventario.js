@@ -798,6 +798,15 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
+      "tipo": "inversion",
+      "nombre": "Varios",
+      "fecha": "2026-09-25",
+      "cantidad": 1,
+      "valorUnitario": 22500,
+      "total": 22500,
+      "id": "costo-1792555890375-2657"
+    },
+    {
       "tipo": "fijo",
       "nombre": "Cuota diaria de la agrupacion",
       "fecha": "2026-10-16",
