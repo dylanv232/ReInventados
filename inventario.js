@@ -799,6 +799,15 @@ window.INVENTARIO = {
   "costos": [
     {
       "tipo": "variable",
+      "nombre": "Papel Kraft",
+      "fecha": "2026-10-20",
+      "cantidad": 100,
+      "valorUnitario": 14,
+      "total": 1400,
+      "id": "costo-1792554630734-4357"
+    },
+    {
+      "tipo": "variable",
       "nombre": "Cartulina española negra",
       "fecha": "2026-10-13",
       "valor": 800,
