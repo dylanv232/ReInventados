@@ -798,6 +798,38 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
+      "tipo": "fijo",
+      "nombre": "Cuota diaria de la agrupacion",
+      "fecha": "2026-10-16",
+      "valor": 15000,
+      "periodo": "semanal",
+      "id": "costo-1792555839857-7946"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota diaria de la agrupacion",
+      "fecha": "2026-10-10",
+      "valor": 7000,
+      "periodo": "semanal",
+      "id": "costo-1792555813835-5082"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "cuota diaria de feria",
+      "fecha": "2026-10-02",
+      "valor": 15000,
+      "periodo": "semanal",
+      "id": "costo-1792555787115-6056"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota mensual agrupacion",
+      "fecha": "2026-10-02",
+      "valor": 5000,
+      "periodo": "mensual",
+      "id": "costo-1792555734997-5180"
+    },
+    {
       "tipo": "variable",
       "nombre": "Traslado",
       "fecha": "2026-10-04",
