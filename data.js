@@ -345,5 +345,20 @@ window.PRODUCTOS = [
     "usos": "",
     "estado": "disponible",
     "imagenes": []
+  },
+  {
+    "id": "prod-1792684256525",
+    "nombre": "Mural Senos",
+    "categoria": "Macramé",
+    "precio": "8000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1792684256525-1.jpg",
+      "img/prod-1792684256525-2.jpg",
+      "img/prod-1792684256525-3.jpg"
+    ]
   }
 ];

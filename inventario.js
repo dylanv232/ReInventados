@@ -117,6 +117,10 @@ window.INVENTARIO = {
     "joyeria-facial-nariz": {
       "cantidad": 0,
       "actualizado": "2026-10-16"
+    },
+    "prod-1792684256525": {
+      "cantidad": 1,
+      "actualizado": "2026-10-22"
     }
   },
   "movimientos": [
