@@ -798,189 +798,31 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
-      "tipo": "inversion",
-      "nombre": "Varios",
-      "fecha": "2026-09-25",
+      "tipo": "variable",
+      "nombre": "Argollas llavero",
+      "fecha": "2026-10-21",
       "cantidad": 1,
-      "valorUnitario": 22500,
-      "total": 22500,
-      "id": "costo-1792555890375-2657"
-    },
-    {
-      "tipo": "fijo",
-      "nombre": "Cuota diaria de la agrupacion",
-      "fecha": "2026-10-16",
-      "valor": 15000,
-      "periodo": "semanal",
-      "id": "costo-1792555839857-7946"
-    },
-    {
-      "tipo": "fijo",
-      "nombre": "Cuota diaria de la agrupacion",
-      "fecha": "2026-10-10",
-      "valor": 7000,
-      "periodo": "semanal",
-      "id": "costo-1792555813835-5082"
-    },
-    {
-      "tipo": "fijo",
-      "nombre": "cuota diaria de feria",
-      "fecha": "2026-10-02",
-      "valor": 15000,
-      "periodo": "semanal",
-      "id": "costo-1792555787115-6056"
-    },
-    {
-      "tipo": "fijo",
-      "nombre": "Cuota mensual agrupacion",
-      "fecha": "2026-10-02",
-      "valor": 5000,
-      "periodo": "mensual",
-      "id": "costo-1792555734997-5180"
+      "valorUnitario": 800,
+      "total": 800,
+      "id": "costo-1792682599108-5917"
     },
     {
       "tipo": "variable",
-      "nombre": "Traslado",
-      "fecha": "2026-10-04",
-      "cantidad": 3,
-      "valorUnitario": 2000,
-      "total": 6000,
-      "id": "costo-1792555063219-8716"
-    },
-    {
-      "tipo": "variable",
-      "nombre": "Entretela 1m",
-      "fecha": "2026-10-04",
-      "cantidad": 1,
-      "valorUnitario": 1600,
-      "total": 1600,
-      "id": "costo-1792555048387-2545"
-    },
-    {
-      "tipo": "variable",
-      "nombre": "Cancamos",
-      "fecha": "2026-10-04",
-      "cantidad": 1,
-      "valorUnitario": 4000,
-      "total": 4000,
-      "id": "costo-1792555028871-7382"
-    },
-    {
-      "tipo": "variable",
-      "nombre": "Alumbre",
-      "fecha": "2026-10-04",
-      "cantidad": 1,
-      "valorUnitario": 3500,
-      "total": 3500,
-      "id": "costo-1792555016166-2487"
-    },
-    {
-      "tipo": "variable",
-      "nombre": "Colafria",
-      "fecha": "2026-10-04",
-      "cantidad": 1,
-      "valorUnitario": 2150,
-      "total": 2150,
-      "id": "costo-1792554993695-2049"
-    },
-    {
-      "tipo": "variable",
-      "nombre": "Luces led 1 m",
-      "fecha": "2026-10-04",
+      "nombre": "Abanicos",
+      "fecha": "2026-10-21",
       "cantidad": 12,
-      "valorUnitario": 250,
-      "total": 3000,
-      "id": "costo-1792554974722-8404"
+      "valorUnitario": 650,
+      "total": 7800,
+      "id": "costo-1792682572532-9805"
     },
     {
       "tipo": "variable",
-      "nombre": "Bolsa Papel craft",
-      "fecha": "2026-10-04",
-      "cantidad": 50,
-      "valorUnitario": 19,
-      "total": 950,
-      "id": "costo-1792554954770-478"
-    },
-    {
-      "tipo": "variable",
-      "nombre": "Cuerda algodón 500m*3mm",
-      "fecha": "2026-10-04",
-      "cantidad": 3,
-      "valorUnitario": 13000,
-      "total": 39000,
-      "id": "costo-1792554917378-6698"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Carrito de traslado",
-      "fecha": "2026-09-25",
-      "cantidad": 1,
-      "valorUnitario": 25000,
-      "total": 25000,
-      "id": "costo-1792554896213-8387"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Decoración",
-      "fecha": "2026-09-25",
-      "cantidad": 1,
-      "valorUnitario": 15000,
-      "total": 15000,
-      "id": "costo-1792554881973-2703"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Colgador Maniqui",
-      "fecha": "2026-09-25",
-      "cantidad": 2,
-      "valorUnitario": 1500,
-      "total": 3000,
-      "id": "costo-1792554867165-321"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Guirnalda luces",
-      "fecha": "2026-09-25",
-      "cantidad": 1,
-      "valorUnitario": 15000,
-      "total": 15000,
-      "id": "costo-1792554842104-9732"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Tela Dacron",
-      "fecha": "2026-09-25",
-      "cantidad": 1,
-      "valorUnitario": 12500,
-      "total": 12500,
-      "id": "costo-1792554825704-7294"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Mesa Plegable",
-      "fecha": "2026-09-25",
-      "cantidad": 1,
-      "valorUnitario": 23000,
-      "total": 23000,
-      "id": "costo-1792554804432-9364"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Lona 4x6m",
-      "fecha": "2026-09-25",
-      "cantidad": 1,
-      "valorUnitario": 18000,
-      "total": 18000,
-      "id": "costo-1792554770651-4534"
-    },
-    {
-      "tipo": "inversion",
-      "nombre": "Toldo 3x3m",
-      "fecha": "2026-09-25",
-      "cantidad": 1,
-      "valorUnitario": 27000,
-      "total": 27000,
-      "id": "costo-1792554732038-5929"
+      "nombre": "Papel Kraft",
+      "fecha": "2026-10-20",
+      "cantidad": 100,
+      "valorUnitario": 14,
+      "total": 1400,
+      "id": "costo-1792554630734-4357"
     },
     {
       "tipo": "variable",
