@@ -374,5 +374,20 @@ window.PRODUCTOS = [
       "img/prod-1792684588622-1.jpg",
       "img/prod-1792684588622-2.jpg"
     ]
+  },
+  {
+    "id": "prod-1792684709604",
+    "nombre": "Repisa plumas",
+    "categoria": "Macramé",
+    "precio": "28000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1792684709604-1.jpg",
+      "img/prod-1792684709604-2.jpg",
+      "img/prod-1792684709604-3.jpg"
+    ]
   }
 ];
