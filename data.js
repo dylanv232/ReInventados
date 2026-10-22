@@ -30,7 +30,10 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": []
+    "imagenes": [
+      "img/atrapasuenos-azul-1.jpg",
+      "img/atrapasuenos-azul-2.jpg"
+    ]
   },
   {
     "id": "atrapasuenos-rosado",
@@ -41,7 +44,10 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": []
+    "imagenes": [
+      "img/atrapasuenos-rosado-1.jpg",
+      "img/atrapasuenos-rosado-2.jpg"
+    ]
   },
   {
     "id": "cintillos",
@@ -162,7 +168,10 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": []
+    "imagenes": [
+      "img/minimural-rosado-amatista-1.jpg",
+      "img/minimural-rosado-amatista-2.jpg"
+    ]
   },
   {
     "id": "mural-mar-y-peces",
@@ -173,7 +182,10 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": []
+    "imagenes": [
+      "img/mural-mar-y-peces-1.jpg",
+      "img/mural-mar-y-peces-2.jpg"
+    ]
   },
   {
     "id": "mural-verde",
@@ -184,7 +196,10 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": []
+    "imagenes": [
+      "img/mural-verde-1.jpg",
+      "img/mural-verde-2.jpg"
+    ]
   },
   {
     "id": "porta-confort",
@@ -294,7 +309,9 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": []
+    "imagenes": [
+      "img/minimurales-1.jpg"
+    ]
   },
   {
     "id": "pelota-colgante",
