@@ -360,5 +360,19 @@ window.PRODUCTOS = [
       "img/prod-1792684256525-2.jpg",
       "img/prod-1792684256525-3.jpg"
     ]
+  },
+  {
+    "id": "prod-1792684588622",
+    "nombre": "Repisa doble",
+    "categoria": "Macramé",
+    "precio": "35000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1792684588622-1.jpg",
+      "img/prod-1792684588622-2.jpg"
+    ]
   }
 ];
