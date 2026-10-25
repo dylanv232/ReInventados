@@ -7,8 +7,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-18"
     },
     "atrapasuenos-azul": {
-      "cantidad": 1,
-      "actualizado": "2026-10-01"
+      "cantidad": 0,
+      "actualizado": "2026-10-23"
     },
     "atrapasuenos-rosado": {
       "cantidad": 1,
@@ -59,8 +59,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "mural-mar-y-peces": {
-      "cantidad": 1,
-      "actualizado": "2026-10-01"
+      "cantidad": 0,
+      "actualizado": "2026-10-23"
     },
     "mural-verde": {
       "cantidad": 1,
@@ -117,21 +117,33 @@ window.INVENTARIO = {
     "joyeria-facial-nariz": {
       "cantidad": 0,
       "actualizado": "2026-10-16"
-    },
-    "prod-1792684256525": {
-      "cantidad": 1,
-      "actualizado": "2026-10-22"
-    },
-    "prod-1792684588622": {
-      "cantidad": 1,
-      "actualizado": "2026-10-22"
-    },
-    "prod-1792684709604": {
-      "cantidad": 1,
-      "actualizado": "2026-10-22"
     }
   },
   "movimientos": [
+    {
+      "id": "mov-1792966089774-6724",
+      "productoId": "atrapasuenos-azul",
+      "productoNombre": "Atrapasueños Azul",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-10-23",
+      "nota": "",
+      "precio": 18000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1792966066791-2830",
+      "productoId": "mural-mar-y-peces",
+      "productoNombre": "Mural Mar y Peces",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-10-23",
+      "nota": "",
+      "precio": 15000,
+      "descuento": 0
+    },
     {
       "id": "mov-1792430697760-2869",
       "productoId": "pulsera",

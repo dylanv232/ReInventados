@@ -30,10 +30,7 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": [
-      "img/atrapasuenos-azul-1.jpg",
-      "img/atrapasuenos-azul-2.jpg"
-    ]
+    "imagenes": []
   },
   {
     "id": "atrapasuenos-rosado",
@@ -44,10 +41,7 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": [
-      "img/atrapasuenos-rosado-1.jpg",
-      "img/atrapasuenos-rosado-2.jpg"
-    ]
+    "imagenes": []
   },
   {
     "id": "cintillos",
@@ -168,10 +162,7 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": [
-      "img/minimural-rosado-amatista-1.jpg",
-      "img/minimural-rosado-amatista-2.jpg"
-    ]
+    "imagenes": []
   },
   {
     "id": "mural-mar-y-peces",
@@ -182,10 +173,7 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": [
-      "img/mural-mar-y-peces-1.jpg",
-      "img/mural-mar-y-peces-2.jpg"
-    ]
+    "imagenes": []
   },
   {
     "id": "mural-verde",
@@ -196,10 +184,7 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": [
-      "img/mural-verde-1.jpg",
-      "img/mural-verde-2.jpg"
-    ]
+    "imagenes": []
   },
   {
     "id": "porta-confort",
@@ -309,9 +294,7 @@ window.PRODUCTOS = [
     "detalles": "",
     "usos": "",
     "estado": "disponible",
-    "imagenes": [
-      "img/minimurales-1.jpg"
-    ]
+    "imagenes": []
   },
   {
     "id": "pelota-colgante",
@@ -345,49 +328,5 @@ window.PRODUCTOS = [
     "usos": "",
     "estado": "disponible",
     "imagenes": []
-  },
-  {
-    "id": "prod-1792684256525",
-    "nombre": "Mural Senos",
-    "categoria": "Macramé",
-    "precio": "8000",
-    "descripcion": "",
-    "detalles": "",
-    "usos": "",
-    "estado": "disponible",
-    "imagenes": [
-      "img/prod-1792684256525-1.jpg",
-      "img/prod-1792684256525-2.jpg",
-      "img/prod-1792684256525-3.jpg"
-    ]
-  },
-  {
-    "id": "prod-1792684588622",
-    "nombre": "Repisa doble",
-    "categoria": "Macramé",
-    "precio": "35000",
-    "descripcion": "",
-    "detalles": "",
-    "usos": "",
-    "estado": "disponible",
-    "imagenes": [
-      "img/prod-1792684588622-1.jpg",
-      "img/prod-1792684588622-2.jpg"
-    ]
-  },
-  {
-    "id": "prod-1792684709604",
-    "nombre": "Repisa plumas",
-    "categoria": "Macramé",
-    "precio": "28000",
-    "descripcion": "",
-    "detalles": "",
-    "usos": "",
-    "estado": "disponible",
-    "imagenes": [
-      "img/prod-1792684709604-1.jpg",
-      "img/prod-1792684709604-2.jpg",
-      "img/prod-1792684709604-3.jpg"
-    ]
   }
 ];
