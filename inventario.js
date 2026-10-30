@@ -115,11 +115,23 @@ window.INVENTARIO = {
       "actualizado": "2026-10-17"
     },
     "joyeria-facial-nariz": {
-      "cantidad": 0,
-      "actualizado": "2026-10-16"
+      "cantidad": 2,
+      "actualizado": "2026-10-25"
     }
   },
   "movimientos": [
+    {
+      "id": "mov-1792966188025-7265",
+      "productoId": "joyeria-facial-nariz",
+      "productoNombre": "Joyeria Facial Nariz",
+      "tipo": "ajuste",
+      "cantidad": 2,
+      "delta": 2,
+      "fecha": "2026-10-25",
+      "nota": "Ajuste desde la lista de stock",
+      "precio": null,
+      "descuento": 0
+    },
     {
       "id": "mov-1792966089774-6724",
       "productoId": "atrapasuenos-azul",
@@ -821,6 +833,24 @@ window.INVENTARIO = {
     }
   ],
   "costos": [
+    {
+      "tipo": "variable",
+      "nombre": "Colet",
+      "fecha": "2026-10-30",
+      "cantidad": 1050,
+      "valorUnitario": 1,
+      "total": 1050,
+      "id": "costo-1793366313105-6017"
+    },
+    {
+      "tipo": "variable",
+      "nombre": "Alambre galvanizado",
+      "fecha": "2026-10-27",
+      "cantidad": 5217,
+      "valorUnitario": 1,
+      "total": 5217,
+      "id": "costo-1793366184204-4156"
+    },
     {
       "tipo": "variable",
       "nombre": "Argollas llavero",
