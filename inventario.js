@@ -15,7 +15,7 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "cintillos": {
-      "cantidad": 4,
+      "cantidad": 8,
       "actualizado": "2026-10-31"
     },
     "colgante-doble-sombrero-a": {
@@ -128,6 +128,18 @@ window.INVENTARIO = {
     }
   },
   "movimientos": [
+    {
+      "id": "mov-1793844276510-6297",
+      "productoId": "cintillos",
+      "productoNombre": "Cintillos",
+      "tipo": "reposicion",
+      "cantidad": 4,
+      "delta": 4,
+      "fecha": "2026-10-31",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
     {
       "id": "mov-1793844072915-3705",
       "productoId": "prod-1793843990208",
