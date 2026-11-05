@@ -2,7 +2,8 @@
 
 window.CATEGORIAS = [
   "Macramé",
-  "Joyeria"
+  "Joyeria",
+  "Tricotin"
 ];
 
 window.PRODUCTOS = [
@@ -328,5 +329,31 @@ window.PRODUCTOS = [
     "usos": "",
     "estado": "disponible",
     "imagenes": []
+  },
+  {
+    "id": "prod-1793843564422",
+    "nombre": "Tiaras",
+    "categoria": "Joyeria",
+    "precio": "8000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1793843564422-1.jpg"
+    ]
+  },
+  {
+    "id": "prod-1793843990208",
+    "nombre": "Tricotin Buho",
+    "categoria": "Tricotin",
+    "precio": "13.000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1793843990208-1.jpg"
+    ]
   }
 ];

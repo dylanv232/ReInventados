@@ -3,8 +3,8 @@
 window.INVENTARIO = {
   "stock": {
     "aros": {
-      "cantidad": 40,
-      "actualizado": "2026-10-18"
+      "cantidad": 39,
+      "actualizado": "2026-10-31"
     },
     "atrapasuenos-azul": {
       "cantidad": 0,
@@ -16,7 +16,7 @@ window.INVENTARIO = {
     },
     "cintillos": {
       "cantidad": 4,
-      "actualizado": "2026-10-16"
+      "actualizado": "2026-10-31"
     },
     "colgante-doble-sombrero-a": {
       "cantidad": 1,
@@ -47,8 +47,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "llaveros": {
-      "cantidad": 15,
-      "actualizado": "2026-10-17"
+      "cantidad": 14,
+      "actualizado": "2026-10-31"
     },
     "minialtar": {
       "cantidad": 1,
@@ -99,16 +99,16 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "pulsera": {
-      "cantidad": 66,
-      "actualizado": "2026-10-11"
+      "cantidad": 64,
+      "actualizado": "2026-10-31"
     },
     "minimurales": {
       "cantidad": 3,
       "actualizado": "2026-10-01"
     },
     "pelota-colgante": {
-      "cantidad": 3,
-      "actualizado": "2026-10-01"
+      "cantidad": 2,
+      "actualizado": "2026-10-16"
     },
     "porta-macetero-verde": {
       "cantidad": 0,
@@ -117,9 +117,125 @@ window.INVENTARIO = {
     "joyeria-facial-nariz": {
       "cantidad": 2,
       "actualizado": "2026-10-25"
+    },
+    "prod-1793843564422": {
+      "cantidad": 2,
+      "actualizado": "2026-10-31"
+    },
+    "prod-1793843990208": {
+      "cantidad": 0,
+      "actualizado": "2026-10-31"
     }
   },
   "movimientos": [
+    {
+      "id": "mov-1793844072915-3705",
+      "productoId": "prod-1793843990208",
+      "productoNombre": "Tricotin Buho",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-10-31",
+      "nota": "Personalizado",
+      "precio": 13000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1793843891613-7462",
+      "productoId": "pelota-colgante",
+      "productoNombre": "Pelota colgante",
+      "tipo": "ajuste",
+      "cantidad": 2,
+      "delta": -1,
+      "fecha": "2026-10-16",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1793843810593-5841",
+      "productoId": "aros",
+      "productoNombre": "Aros",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-10-31",
+      "nota": "",
+      "precio": 3000,
+      "descuento": 500
+    },
+    {
+      "id": "mov-1793843768705-7616",
+      "productoId": "pulsera",
+      "productoNombre": "Pulsera",
+      "tipo": "venta",
+      "cantidad": 2,
+      "delta": -2,
+      "fecha": "2026-10-31",
+      "nota": "",
+      "precio": 2500,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1793843739048-5731",
+      "productoId": "llaveros",
+      "productoNombre": "Llaveros",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-10-31",
+      "nota": "",
+      "precio": 3000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1793843713678-8707",
+      "productoId": "prod-1793843564422",
+      "productoNombre": "Tiaras",
+      "tipo": "venta",
+      "cantidad": 2,
+      "delta": -2,
+      "fecha": "2026-10-31",
+      "nota": "",
+      "precio": 8000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1793843652296-9625",
+      "productoId": "prod-1793843564422",
+      "productoNombre": "Tiaras",
+      "tipo": "ajuste",
+      "cantidad": 4,
+      "delta": 3,
+      "fecha": "2026-10-01",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1793472425454-8802",
+      "productoId": "cintillos",
+      "productoNombre": "Cintillos",
+      "tipo": "ajuste",
+      "cantidad": 4,
+      "delta": 4,
+      "fecha": "2026-10-31",
+      "nota": "Ajuste desde la lista de stock",
+      "precio": null,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1793472390464-9260",
+      "productoId": "cintillos",
+      "productoNombre": "Cintillos",
+      "tipo": "venta",
+      "cantidad": 4,
+      "delta": -4,
+      "fecha": "2026-10-31",
+      "nota": "",
+      "precio": 4000,
+      "descuento": 0
+    },
     {
       "id": "mov-1792966188025-7265",
       "productoId": "joyeria-facial-nariz",
