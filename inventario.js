@@ -125,6 +125,18 @@ window.INVENTARIO = {
     "prod-1793843990208": {
       "cantidad": 0,
       "actualizado": "2026-10-31"
+    },
+    "prod-1793845095793": {
+      "cantidad": 1,
+      "actualizado": "2026-11-04"
+    },
+    "prod-1793845137081": {
+      "cantidad": 1,
+      "actualizado": "2026-11-04"
+    },
+    "prod-1793845172732": {
+      "cantidad": 1,
+      "actualizado": "2026-11-04"
     }
   },
   "movimientos": [

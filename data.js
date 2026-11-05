@@ -355,5 +355,44 @@ window.PRODUCTOS = [
     "imagenes": [
       "img/prod-1793843990208-1.jpg"
     ]
+  },
+  {
+    "id": "prod-1793845095793",
+    "nombre": "Tricotin Picaflor",
+    "categoria": "Tricotin",
+    "precio": "12.000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1793845095793-1.jpg"
+    ]
+  },
+  {
+    "id": "prod-1793845137081",
+    "nombre": "Tricotin Ballena",
+    "categoria": "Tricotin",
+    "precio": "12.000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1793845137081-1.jpg"
+    ]
+  },
+  {
+    "id": "prod-1793845172732",
+    "nombre": "Tricotin Flamenco",
+    "categoria": "Tricotin",
+    "precio": "12.000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1793845172732-1.jpg"
+    ]
   }
 ];
