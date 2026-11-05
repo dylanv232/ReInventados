@@ -974,6 +974,110 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
+      "tipo": "fijo",
+      "nombre": "Cuota semanal",
+      "fecha": "2026-10-10",
+      "valor": 7000,
+      "periodo": "semanal",
+      "id": "costo-1793846207553-2600"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota semanal",
+      "fecha": "2026-10-02",
+      "valor": 15000,
+      "periodo": "semanal",
+      "id": "costo-1793846151834-9465"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Patente municipal",
+      "fecha": "2026-11-06",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1793846080111-7257"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Patente municipal",
+      "fecha": "2026-10-02",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1793846034284-8280"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Decoración",
+      "fecha": "2026-09-27",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1793845863417-6941"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Yegua 70k",
+      "fecha": "2026-09-27",
+      "cantidad": 1,
+      "valorUnitario": 25000,
+      "total": 25000,
+      "id": "costo-1793845812661-7926"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Colgador maniqui",
+      "fecha": "2026-09-27",
+      "cantidad": 2,
+      "valorUnitario": 1500,
+      "total": 3000,
+      "id": "costo-1793845776876-7032"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Guirnaldas",
+      "fecha": "2026-09-27",
+      "cantidad": 1,
+      "valorUnitario": 15000,
+      "total": 15000,
+      "id": "costo-1793845727004-9634"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Tela Dacron 3x6",
+      "fecha": "2026-09-27",
+      "cantidad": 1,
+      "valorUnitario": 12500,
+      "total": 12500,
+      "id": "costo-1793845691577-2868"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Loba 3x6",
+      "fecha": "2026-09-27",
+      "cantidad": 1,
+      "valorUnitario": 18000,
+      "total": 18000,
+      "id": "costo-1793845612736-5740"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Mesa plegable",
+      "fecha": "2026-09-27",
+      "cantidad": 1,
+      "valorUnitario": 23000,
+      "total": 23000,
+      "id": "costo-1793845583884-3962"
+    },
+    {
+      "tipo": "inversion",
+      "nombre": "Toldo 3x3",
+      "fecha": "2026-09-27",
+      "cantidad": 1,
+      "valorUnitario": 27000,
+      "total": 27000,
+      "id": "costo-1793845548835-1538"
+    },
+    {
       "tipo": "variable",
       "nombre": "Colet",
       "fecha": "2026-10-30",
