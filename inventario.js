@@ -15,8 +15,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "cintillos": {
-      "cantidad": 8,
-      "actualizado": "2026-10-31"
+      "cantidad": 7,
+      "actualizado": "2026-11-08"
     },
     "colgante-doble-sombrero-a": {
       "cantidad": 1,
@@ -27,8 +27,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "gargantillas-a": {
-      "cantidad": 65,
-      "actualizado": "2026-10-16"
+      "cantidad": 61,
+      "actualizado": "2026-11-08"
     },
     "gargantillas-b": {
       "cantidad": 3,
@@ -47,8 +47,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "llaveros": {
-      "cantidad": 14,
-      "actualizado": "2026-10-31"
+      "cantidad": 13,
+      "actualizado": "2026-11-08"
     },
     "minialtar": {
       "cantidad": 1,
@@ -99,8 +99,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "pulsera": {
-      "cantidad": 64,
-      "actualizado": "2026-10-31"
+      "cantidad": 62,
+      "actualizado": "2026-11-08"
     },
     "minimurales": {
       "cantidad": 3,
@@ -119,8 +119,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-25"
     },
     "prod-1793843564422": {
-      "cantidad": 2,
-      "actualizado": "2026-10-31"
+      "cantidad": 3,
+      "actualizado": "2026-11-08"
     },
     "prod-1793843990208": {
       "cantidad": 0,
@@ -137,9 +137,149 @@ window.INVENTARIO = {
     "prod-1793845172732": {
       "cantidad": 1,
       "actualizado": "2026-11-04"
+    },
+    "prod-1794451650794": {
+      "cantidad": 1,
+      "actualizado": "2026-11-08"
+    },
+    "prod-1794451684461": {
+      "cantidad": 10,
+      "actualizado": "2026-11-08"
     }
   },
   "movimientos": [
+    {
+      "id": "mov-1794451853553-8954",
+      "productoId": "prod-1793843564422",
+      "productoNombre": "Tiaras",
+      "tipo": "reposicion",
+      "cantidad": 3,
+      "delta": 3,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451805901-7338",
+      "productoId": "prod-1794451684461",
+      "productoNombre": "Abanicos",
+      "tipo": "venta",
+      "cantidad": 2,
+      "delta": -2,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": 2000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451798429-8342",
+      "productoId": "prod-1794451684461",
+      "productoNombre": "Abanicos",
+      "tipo": "reposicion",
+      "cantidad": 11,
+      "delta": 11,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451780963-7059",
+      "productoId": "prod-1794451650794",
+      "productoNombre": "Posavasos",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": 4000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451770811-9429",
+      "productoId": "prod-1794451650794",
+      "productoNombre": "Posavasos",
+      "tipo": "reposicion",
+      "cantidad": 1,
+      "delta": 1,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451716580-2866",
+      "productoId": "llaveros",
+      "productoNombre": "Llaveros",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": 3000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451568432-9232",
+      "productoId": "prod-1793843564422",
+      "productoNombre": "Tiaras",
+      "tipo": "venta",
+      "cantidad": 2,
+      "delta": -2,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": 8000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451493331-8472",
+      "productoId": "cintillos",
+      "productoNombre": "Cintillos",
+      "tipo": "venta",
+      "cantidad": 1,
+      "delta": -1,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": 4000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451466517-4975",
+      "productoId": "gargantillas-a",
+      "productoNombre": "Gargantillas A",
+      "tipo": "venta",
+      "cantidad": 4,
+      "delta": -4,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": 3000,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451396919-8563",
+      "productoId": "pulsera",
+      "productoNombre": "Pulsera",
+      "tipo": "reposicion",
+      "cantidad": 8,
+      "delta": 8,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
+    {
+      "id": "mov-1794451367367-6925",
+      "productoId": "pulsera",
+      "productoNombre": "Pulsera",
+      "tipo": "venta",
+      "cantidad": 10,
+      "delta": -10,
+      "fecha": "2026-11-08",
+      "nota": "",
+      "precio": 2500,
+      "descuento": 0
+    },
     {
       "id": "mov-1793844276510-6297",
       "productoId": "cintillos",

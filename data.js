@@ -3,7 +3,9 @@
 window.CATEGORIAS = [
   "Macramé",
   "Joyeria",
-  "Tricotin"
+  "Tricotin",
+  "Yute",
+  "Reventa"
 ];
 
 window.PRODUCTOS = [
@@ -393,6 +395,32 @@ window.PRODUCTOS = [
     "estado": "disponible",
     "imagenes": [
       "img/prod-1793845172732-1.jpg"
+    ]
+  },
+  {
+    "id": "prod-1794451650794",
+    "nombre": "Posavasos",
+    "categoria": "Yute",
+    "precio": "4000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1794451650794-1.jpg"
+    ]
+  },
+  {
+    "id": "prod-1794451684461",
+    "nombre": "Abanicos",
+    "categoria": "Reventa",
+    "precio": "2000",
+    "descripcion": "",
+    "detalles": "",
+    "usos": "",
+    "estado": "disponible",
+    "imagenes": [
+      "img/prod-1794451684461-1.jpg"
     ]
   }
 ];
