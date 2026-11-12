@@ -1114,6 +1114,31 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
+      "tipo": "variable",
+      "nombre": "Esmalte, yute, sobres para joyas",
+      "fecha": "2026-11-10",
+      "cantidad": 1,
+      "valorUnitario": 7900,
+      "total": 7900,
+      "id": "costo-1794452187109-565"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Patente municipal",
+      "fecha": "2026-11-06",
+      "valor": 5000,
+      "periodo": "diario",
+      "id": "costo-1794452004406-7901"
+    },
+    {
+      "tipo": "fijo",
+      "nombre": "Cuota semanal",
+      "fecha": "2026-11-06",
+      "valor": 15000,
+      "periodo": "diario",
+      "id": "costo-1794451974245-2545"
+    },
+    {
       "tipo": "fijo",
       "nombre": "Cuota semanal",
       "fecha": "2026-10-10",
