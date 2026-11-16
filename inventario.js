@@ -99,8 +99,8 @@ window.INVENTARIO = {
       "actualizado": "2026-10-01"
     },
     "pulsera": {
-      "cantidad": 62,
-      "actualizado": "2026-11-08"
+      "cantidad": 70,
+      "actualizado": "2026-11-16"
     },
     "minimurales": {
       "cantidad": 3,
@@ -148,6 +148,18 @@ window.INVENTARIO = {
     }
   },
   "movimientos": [
+    {
+      "id": "mov-1794861651268-8546",
+      "productoId": "pulsera",
+      "productoNombre": "Pulsera",
+      "tipo": "reposicion",
+      "cantidad": 8,
+      "delta": 8,
+      "fecha": "2026-11-16",
+      "nota": "",
+      "precio": null,
+      "descuento": 0
+    },
     {
       "id": "mov-1794451853553-8954",
       "productoId": "prod-1793843564422",
