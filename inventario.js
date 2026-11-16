@@ -1114,6 +1114,14 @@ window.INVENTARIO = {
   ],
   "costos": [
     {
+      "tipo": "fijo",
+      "nombre": "Cuota semanal",
+      "fecha": "2026-10-16",
+      "valor": 15000,
+      "periodo": "diario",
+      "id": "costo-1794845943572-5711"
+    },
+    {
       "tipo": "variable",
       "nombre": "Maniquí",
       "fecha": "2026-11-13",
