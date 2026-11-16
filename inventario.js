@@ -1115,6 +1115,15 @@ window.INVENTARIO = {
   "costos": [
     {
       "tipo": "variable",
+      "nombre": "Maniquí",
+      "fecha": "2026-11-13",
+      "cantidad": 1,
+      "valorUnitario": 7000,
+      "total": 7000,
+      "id": "costo-1794845550929-1881"
+    },
+    {
+      "tipo": "variable",
       "nombre": "Esmalte, yute, sobres para joyas",
       "fecha": "2026-11-10",
       "cantidad": 1,
